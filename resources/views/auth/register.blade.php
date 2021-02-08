@@ -12,7 +12,7 @@
 
         <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Name')"/>
+                <x-label for="name" :value="__('auth_views.name')"/>
 
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
                          autofocus/>
@@ -20,14 +20,14 @@
 
             <!-- Email Address -->
             <div class="mt-4">
-                <x-label for="email" :value="__('Email')"/>
+                <x-label for="email" :value="__('auth_views.email')"/>
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required/>
             </div>
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')"/>
+                <x-label for="password" :value="__('auth_views.password')"/>
 
                 <x-input id="password" class="block mt-1 w-full"
                          type="password"
@@ -37,7 +37,7 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')"/>
+                <x-label for="password_confirmation" :value="__('auth_views.confirm_password')"/>
 
                 <x-input id="password_confirmation" class="block mt-1 w-full"
                          type="password"
@@ -46,7 +46,7 @@
 
             <!-- Date Of Birth -->
             <div class="mt-4">
-                <x-label for="date_of_birth" :value="__('Date Of Birth')"/>
+                <x-label for="date_of_birth" :value="__('auth_views.date_of_birth')"/>
                 @php
                     $yesterdayCarbon = Carbon\Carbon::yesterday();
                     $yesterdayDate = $yesterdayCarbon->format('Y-m-d');
@@ -62,11 +62,11 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('auth_views.registered') }}
                 </a>
 
                 <x-button class="ml-4">
-                    {{ __('Register') }}
+                    {{ __('auth_views.register') }}
                 </x-button>
             </div>
         </form>
