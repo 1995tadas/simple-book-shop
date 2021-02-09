@@ -9,6 +9,7 @@ use App\Models\Genre;
 use App\Models\BookGenre;
 use App\Services\ImageService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BookController extends Controller
 {
@@ -41,6 +42,7 @@ class BookController extends Controller
         $validatedRequest = $request->validated();
         $validatedRequest['cover'] = $path;
         $validatedRequest['user_id'] = Auth::user()->id;
+        $validatedRequest['slug'] = Str::of($request->title)->slug('-');
         $book = Book::create($validatedRequest);
 
         if ($book) {

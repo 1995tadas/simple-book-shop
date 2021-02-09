@@ -9,7 +9,12 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'price', 'discount', 'description', 'cover', 'user_id'];
+    protected $fillable = ['title','slug', 'price', 'discount', 'description', 'cover', 'user_id'];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     public function setTitleAttribute($value)
     {
