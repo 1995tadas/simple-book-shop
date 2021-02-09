@@ -22,7 +22,12 @@
         <!-- Book author -->
         <div class="mt-4">
             <x-label for="authors" :value="__('book.author')"/>
-            <input-repeater id="authors" type="text" name="authors"></input-repeater>
+            <input-repeater
+                @if(old('authors'))
+                :value="{{ json_encode(old('authors')) }}"
+                @endif
+                id="authors" type="text" name="authors"
+            ></input-repeater>
         </div>
         <div class="mt-4">
             <x-label for="price">

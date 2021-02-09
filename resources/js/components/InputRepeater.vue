@@ -6,7 +6,7 @@
                           block mt-1 w-full"
                    @blur="newInput(item)"
                    :type="type" :id="id" :name="name + '[' + item + ']'"
-                   v-model="selected[item]" :required="item === 1">
+                   v-model="selected[item - 1]" :required="item === 1">
         </template>
     </div>
 </template>
@@ -14,6 +14,9 @@
 <script>
 export default {
     props: {
+        value: {
+            type: Object
+        },
         id: {
             type: String,
             required: true
@@ -27,6 +30,17 @@ export default {
             required: true
         }
     },
+    created() {
+        if (this.value) {
+            const valueArray = Object.values(this.value);
+            this.count = valueArray.length;
+            if (this.count < 3) {
+                this.count++
+            }
+
+            this.selected = valueArray;
+        }
+    },
     data() {
         return {
             selected: [],
@@ -37,15 +51,17 @@ export default {
         newInput(item) {
             const selectedLength = this.selected.length;
             for (let i = 0; i <= selectedLength; i++) {
-                if (this.selected[i] === "" && this.count > 1) {
-                    this.selected.splice(i, 1);
-                    console.log(this.selected);
-                    this.count--;
+                if (this.selected[i] === "") {
+                    if (this.count > 1) {
+                        this.selected.splice(i, 1);
+                        this.count--;
+                    }
+
                     return;
                 }
             }
 
-            if (item === this.count && this.count < 3 && this.selected.length > 1) {
+            if (item === this.count && this.count < 3 && this.selected.length > 0) {
                 this.count++
             }
         }
