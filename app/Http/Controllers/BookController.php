@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
+use App\Models\BookGenre;
 use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
@@ -21,10 +23,26 @@ class BookController extends Controller
         $validatedRequest = $request->validated();
         $validatedRequest['cover'] = $coverPath;
         $validatedRequest['user_id'] = Auth::user()->id;
-        $created = Book::create($validatedRequest);
+        $book = Book::create($validatedRequest);
 
-        if ($created) {
-            return redirect()->route('book.index');
+        if ($book) {
+            foreach ($validatedRequest['authors'] as $author) {
+                if ($author !== null) {
+                    Author::create([
+                        'name' => $author,
+                        'book_id' => $book->id
+                    ]);
+                }
+            }
+
+            foreach ($validatedRequest['genres']  as $genre){
+                BookGenre::create([
+                    'book_id' => $book->id,
+                    'genre_id' => $genre
+                ]);
+            }
+
+            return redirect()->route('book.landing');
         }
 
         abort(404);

@@ -21,8 +21,8 @@
         </div>
         <!-- Book author -->
         <div class="mt-4">
-            <x-label for="author" :value="__('book.author')"/>
-            <input-repeater id="author" type="text" name="author"></input-repeater>
+            <x-label for="authors" :value="__('book.author')"/>
+            <input-repeater id="authors" type="text" name="authors"></input-repeater>
         </div>
         <div class="mt-4">
             <x-label for="price">
