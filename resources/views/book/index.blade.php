@@ -6,7 +6,7 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-20 box-border">
                 @foreach($books as $book)
                     <div class="text-left">
-                        <a href="" class="relative block">
+                        <a href="{{route('book.show', ['book' => $book->id])}}" class="relative block">
                             @if((\Carbon\Carbon::parse($book->created_at))->gt(\Carbon\Carbon::now()->subWeek()))
                                 <span class="absolute top-2 right-2 text-red-600 rounded font-bold bg-white px-1">
                                     {{__('book.recent')}}

@@ -33,7 +33,7 @@
             <x-label for="price">
                 {{__('book.price')}} (€)
             </x-label>
-            <x-input id="price" class="block mt-1 w-full" type="number" name="price" :value="old('price') ?? 0"/>
+            <x-input id="price" class="block mt-1 w-full" type="number" step="0.01" name="price" :value="old('price') ?? 0"/>
         </div>
         @if(strtolower($method) !== "post")
             <div class="mt-4">

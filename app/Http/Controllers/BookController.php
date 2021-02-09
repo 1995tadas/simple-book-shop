@@ -7,14 +7,25 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
 use App\Models\BookGenre;
+use App\Services\ImageService;
 use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::with(['authors', 'genres'])->simplePaginate(25);
+        $books = Book::with(['authors', 'genres'])->latest()->simplePaginate(25);
         return view('book.index', compact('books'));
+    }
+
+    public function show(Book $book)
+    {
+        $data = [
+            'book' => $book,
+            'authors' => $book->authors,
+            'genres' => $book->genres
+        ];
+        return view('book.show', $data);
     }
 
     public function create()
@@ -25,9 +36,10 @@ class BookController extends Controller
 
     public function store(BookRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $coverPath = $request->file('cover')->store('covers');
+        $imageService = new ImageService();
+        $path = $imageService->crop($request->file('cover'), 'covers/', 600, 1000);
         $validatedRequest = $request->validated();
-        $validatedRequest['cover'] = $coverPath;
+        $validatedRequest['cover'] = $path;
         $validatedRequest['user_id'] = Auth::user()->id;
         $book = Book::create($validatedRequest);
 
