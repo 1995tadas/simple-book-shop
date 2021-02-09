@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'book.index')->name('landing');
+Route::group(['as' => 'book.'], function () {
+    Route::view('/', 'book.index')->name('landing');
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/create', [BookController::class, 'create'])->name('create');
+        Route::post('/store', [BookController::class, 'store'])->name('store');
+    });
+});
+
+Route::group(['prefix' => 'genre', 'as' => 'genre.', 'middleware' => 'admin'], function () {
+    Route::view('/create', 'genre.create')->name('create');
+    Route::post('/store', [GenreController::class, 'store'])->name('store');
+});
 
 require __DIR__ . '/auth.php';
