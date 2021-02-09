@@ -16,14 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['as' => 'book.'], function () {
-    Route::view('/', 'book.index')->name('landing');
+    Route::get('/', [BookController::class, 'index'])->name('index');
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/create', [BookController::class, 'create'])->name('create');
         Route::post('/store', [BookController::class, 'store'])->name('store');
     });
 });
 
-Route::group(['prefix' => 'genre', 'as' => 'genre.', 'middleware' => 'admin'], function () {
+Route::group(['prefix' => 'genre', 'as' => 'genre.', 'middleware' => ['auth', 'admin']], function () {
     Route::view('/create', 'genre.create')->name('create');
     Route::post('/store', [GenreController::class, 'store'])->name('store');
 });

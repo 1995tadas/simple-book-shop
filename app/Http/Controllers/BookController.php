@@ -11,13 +11,19 @@ use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
+    public function index()
+    {
+        $books = Book::with(['authors', 'genres'])->simplePaginate(25);
+        return view('book.index', compact('books'));
+    }
+
     public function create()
     {
         $genres = Genre::all('id AS value', 'title AS option');
         return view('book.create', compact('genres'));
     }
 
-    public function store(BookRequest $request)
+    public function store(BookRequest $request): \Illuminate\Http\RedirectResponse
     {
         $coverPath = $request->file('cover')->store('covers');
         $validatedRequest = $request->validated();
@@ -35,14 +41,14 @@ class BookController extends Controller
                 }
             }
 
-            foreach ($validatedRequest['genres']  as $genre){
+            foreach ($validatedRequest['genres'] as $genre) {
                 BookGenre::create([
                     'book_id' => $book->id,
                     'genre_id' => $genre
                 ]);
             }
 
-            return redirect()->route('book.landing');
+            return redirect()->route('book.index');
         }
 
         abort(404);

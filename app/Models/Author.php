@@ -11,5 +11,10 @@ class Author extends Model
 
     protected $fillable = ['name', 'book_id'];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucfirst($value);
+    }
+
     public $timestamps = false;
 }
