@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,10 @@ Route::group(['as' => 'book.'], function () {
 Route::group(['prefix' => 'genre', 'as' => 'genre.', 'middleware' => ['auth', 'admin']], function () {
     Route::view('/create', 'genre.create')->name('create');
     Route::post('/store', [GenreController::class, 'store'])->name('store');
+});
+
+Route::group(['as' => 'rating.', 'prefix' => 'rating', 'middleware' => 'auth'], function () {
+    Route::post('/store/{book}', [RatingController::class, 'store'])->name('store');
 });
 
 require __DIR__ . '/auth.php';

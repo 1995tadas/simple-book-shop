@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookGenresTable extends Migration
+class CreateRatingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateBookGenresTable extends Migration
      */
     public function up()
     {
-        Schema::create('book_genres', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->id();
+            $table->integer('rate');
             $table->foreignId('book_id')->constrained()->onDelete('cascade');
-            $table->foreignId('genre_id')->constrained()->onDelete('cascade');
-            $table->unique(['book_id', 'genre_id']);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unique(['book_id', 'user_id']);
+            $table->timestamps();
         });
     }
 
@@ -28,6 +30,6 @@ class CreateBookGenresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_genres');
+        Schema::dropIfExists('ratings');
     }
 }

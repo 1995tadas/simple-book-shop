@@ -27,7 +27,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div>placeholder</div>
+                    <book-rating store-route="{{  route('rating.store', ['book' => $book->slug]) }}"></book-rating>
                 </div>
                 <p class="h-3/4 text-2xl flex align-items-center mt-1 md:mt-0">
                     {{$book->description}}
