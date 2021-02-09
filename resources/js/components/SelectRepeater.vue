@@ -1,0 +1,59 @@
+<template>
+    <div class="w-full m-auto">
+        <template v-for="item in count">
+            <select class="rounded-md shadow-sm
+                    border-gray-300 focus:border-indigo-300
+                    focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    :id="id" :name="name + '[' + item + ']'"
+                    v-model="selected[item]"
+                    :required="item === 1"
+                    @change="newSelect(item)">
+                <option :value="null" selected="selected" :disabled="item === 1"></option>
+                <option v-for="option in options" :value="option.value"
+                        :disabled = "selected.includes(option.value) && selected[item] !== option.value">
+                    {{ option.option }}
+                </option>
+            </select>
+        </template>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {
+        options: {
+            type: Array,
+            required: true
+        },
+        id: {
+            type: String,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        }
+    },
+    data() {
+        return {
+            selected: [],
+            count: 1,
+        }
+    },
+    methods: {
+        newSelect(item) {
+            const selectedLength = this.selected.length;
+            for (let i = 0; i <= selectedLength; i++) {
+                if (this.selected[i] === null && this.count > 1) {
+                    this.selected.splice(i, 1);
+                    this.count--;
+                }
+            }
+
+            if (item === this.count && this.count < 6 && this.count < this.options.length) {
+                this.count++
+            }
+        }
+    }
+}
+</script>
