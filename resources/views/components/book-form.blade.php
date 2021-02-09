@@ -24,7 +24,7 @@
             <x-label for="authors" :value="__('book.author')"/>
             <input-repeater
                 @if(old('authors'))
-                :value="{{ json_encode(old('authors')) }}"
+                :values="{{ json_encode(old('authors')) }}"
                 @endif
                 id="authors" type="text" name="authors"
             ></input-repeater>
@@ -46,7 +46,11 @@
         @endif
         <div class="mt-4">
             <x-label for="genres" :value="__('book.genres')"/>
-            <select-repeater :options="{{$genres}}" id="genres" name="genres"></select-repeater>
+            <select-repeater
+                @if(old('genres'))
+                :values="{{ json_encode(old('genres')) }}"
+                @endif
+                :options="{{$genres}}" id="genres" name="genres"></select-repeater>
         </div>
         <div class="mt-4">
             <x-label for="description" :value="__('book.description')"/>

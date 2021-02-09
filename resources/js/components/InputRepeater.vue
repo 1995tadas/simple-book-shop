@@ -14,7 +14,7 @@
 <script>
 export default {
     props: {
-        value: {
+        values: {
             type: Object
         },
         id: {
@@ -31,8 +31,8 @@ export default {
         }
     },
     created() {
-        if (this.value) {
-            const valueArray = Object.values(this.value);
+        if (this.values) {
+            const valueArray = Object.values(this.values);
             this.count = valueArray.length;
             if (this.count < 3) {
                 this.count++

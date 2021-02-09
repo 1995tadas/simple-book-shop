@@ -5,12 +5,12 @@
                     border-gray-300 focus:border-indigo-300
                     focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     :id="id" :name="name + '[' + item + ']'"
-                    v-model="selected[item]"
+                    v-model="selected[item - 1]"
                     :required="item === 1"
                     @change="newSelect(item)">
                 <option :value="null" selected="selected" :disabled="item === 1"></option>
                 <option v-for="option in options" :value="option.value"
-                        :disabled = "selected.includes(option.value) && selected[item] !== option.value">
+                        :disabled = "selected.includes(option.value) && selected[item - 1] !== option.value">
                     {{ option.option }}
                 </option>
             </select>
@@ -21,6 +21,9 @@
 <script>
 export default {
     props: {
+        values:{
+            type: Object,
+        },
         options: {
             type: Array,
             required: true
@@ -40,6 +43,17 @@ export default {
             count: 1,
         }
     },
+    created() {
+        if (this.values) {
+            const valueArray = Object.values(this.values);
+            this.count = valueArray.length;
+            if (this.count < 6 && this.count < this.options.length) {
+                this.count++
+            }
+
+            this.selected = valueArray.map(Number);
+        }
+    },
     methods: {
         newSelect(item) {
             const selectedLength = this.selected.length;
@@ -47,6 +61,7 @@ export default {
                 if (this.selected[i] === null && this.count > 1) {
                     this.selected.splice(i, 1);
                     this.count--;
+                    return;
                 }
             }
 
