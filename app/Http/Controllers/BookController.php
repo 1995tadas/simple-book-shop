@@ -66,12 +66,7 @@ class BookController extends Controller
                 }
             }
 
-            foreach ($validatedRequest['genres'] as $genre) {
-                BookGenre::create([
-                    'book_id' => $book->id,
-                    'genre_id' => $genre
-                ]);
-            }
+            $book->genres()->sync($validatedRequest['genres']);
 
             return redirect()->route('book.index');
         }
