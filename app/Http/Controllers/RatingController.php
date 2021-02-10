@@ -21,4 +21,15 @@ class RatingController extends Controller
 
         return response('created', 201);
     }
+
+    public function destroy(Book $book)
+    {
+        $deleted = Rating::where('book_id', $book->id)->where('user_id', Auth::user()->id)->delete();
+        if (!$deleted) {
+            return response('failed', 422);
+        }
+
+        return response('deleted', 204);
+    }
+
 }

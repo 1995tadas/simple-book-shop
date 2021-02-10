@@ -33,7 +33,8 @@ Route::group(['prefix' => 'genre', 'as' => 'genre.', 'middleware' => ['auth', 'a
 });
 
 Route::group(['as' => 'rating.', 'prefix' => 'rating', 'middleware' => 'auth'], function () {
-    Route::post('/store/{book}', [RatingController::class, 'store'])->name('store');
+    Route::post('/{book}', [RatingController::class, 'store'])->name('store');
+    Route::delete('/{book}', [RatingController::class, 'destroy'])->name('destroy');
 });
 
 require __DIR__ . '/auth.php';

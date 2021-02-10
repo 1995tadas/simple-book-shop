@@ -21,10 +21,21 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
+        $ratings = $book->ratings;
+        $user_rating = null;
+        if ($ratings->isNotEmpty()) {
+            $rated = $ratings->where('user_id', Auth()->user()->id)->first();
+            if ($rated) {
+                $user_rating = $rated->rate;
+            }
+        }
+
         $data = [
             'book' => $book,
             'authors' => $book->authors,
-            'genres' => $book->genres
+            'genres' => $book->genres,
+            'ratings' => $ratings->IsEmpty() ? 0 : $ratings->avg('rate'),
+            'user_rating' => $user_rating
         ];
         return view('book.show', $data);
     }
