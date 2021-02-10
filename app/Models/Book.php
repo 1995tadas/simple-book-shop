@@ -40,4 +40,9 @@ class Book extends Model
     {
         return $this->hasMany(Rating::class);
     }
+
+    public function reviews(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }

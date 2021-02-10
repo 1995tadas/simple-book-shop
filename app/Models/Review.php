@@ -10,4 +10,14 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = ['content', 'user_id', 'book_id'];
+
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = ucfirst($value);
+    }
+
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

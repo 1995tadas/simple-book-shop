@@ -6,7 +6,6 @@ use App\Http\Requests\BookRequest;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
-use App\Models\BookGenre;
 use App\Services\ImageService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -34,6 +33,7 @@ class BookController extends Controller
             'book' => $book,
             'authors' => $book->authors,
             'genres' => $book->genres,
+            'reviews' => $book->reviews()->latest()->simplePaginate(3),
             'ratings' => $ratings->IsEmpty() ? 0 : $ratings->avg('rate'),
             'user_rating' => $user_rating
         ];

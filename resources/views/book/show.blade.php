@@ -2,12 +2,12 @@
     <div class="p-3">
         <div class="flex flex-col md:flex-row md:h-2/4">
             <div class="flex justify-center md:mr-5">
-                <img class="h-96" alt="{{ $book->title.' cover'}}"
+                <img class="h-96" alt="{{$book->title.' cover'}}"
                      title="{{$book->title}}"
                      src="{{asset('storage/' . $book->cover)}}">
             </div>
             <div class="flex-1 text-left">
-                <h1 class="text-3xl border-b-4 border-dark">{{$book->title}}</h1>
+                <h1 class="text-3xl border-b-4 border-black">{{$book->title}}</h1>
                 <div class="flex flex-col md:flex-row justify-between">
                     <div class="mt-2">
                         <div>
@@ -42,9 +42,35 @@
                 </p>
             </div>
         </div>
-        <review
-            :translation="{{ json_encode(trans('review')) }}"
-            store-route="{{ route('review.store', ['book' => $book->slug]) }}">
-        </review>
+        <div class="my-2">
+            <div class="flex justify-between py-3 w-100">
+                <div class="w-60 hidden md:block md:invisible"><span class="inline">|</span></div>
+                <div class="flex-grow">
+                    <h1 class="w-100 text-3xl border-b-4 border-black">{{__('book.reviews')}}</h1>
+                </div>
+            </div>
+            @foreach($reviews as $review)
+                <div class="flex justify-between py-3 w-100 break-all">
+                    <div class="w-100 md:w-60 text-right">
+                        <span class="text-xs inline m-1 bg-blue-100 p-1 rounded">{{$review->created_at}}</span>
+                        <span class="inline m-1 bg-blue-100 p-1 rounded">{{$review->users->name}}</span>
+                    </div>
+                    <span class="flex-grow">{{$review->content}}</span>
+                </div>
+            @endforeach
+            <div class="flex justify-start md:justify-end">
+                {{$reviews->links()}}
+            </div>
+            <div class="flex justify-between py-3 w-100">
+                <div class="w-60 hidden md:block md:invisible"><span class="inline">|</span></div>
+                <div class="flex-grow">
+                    <review
+                        :translation="{{ json_encode(trans('review')) }}"
+                        store-route="{{ route('review.store', ['book' => $book->slug]) }}"
+                    >
+                    </review>
+                </div>
+            </div>
+        </div>
     </div>
 </x-app-layout>

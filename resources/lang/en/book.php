@@ -13,5 +13,6 @@ return [
     'empty' => 'No books so far',
     'open' => 'Open',
     'free' => 'Free',
-    'recent' => 'New'
+    'recent' => 'New',
+    'reviews' => 'Reviews'
 ];
