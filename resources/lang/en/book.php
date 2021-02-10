@@ -14,5 +14,5 @@ return [
     'open' => 'Open',
     'free' => 'Free',
     'recent' => 'New',
-    'reviews' => 'Reviews'
+    'reviews' => 'Reviews',
 ];

@@ -61,16 +61,29 @@
             <div class="flex justify-start md:justify-end">
                 {{$reviews->links()}}
             </div>
-            <div class="flex justify-between py-3 w-100">
-                <div class="w-60 hidden md:block md:invisible"><span class="inline">|</span></div>
-                <div class="flex-grow">
-                    <review
-                        :translation="{{ json_encode(trans('review')) }}"
-                        store-route="{{ route('review.store', ['book' => $book->slug]) }}"
-                    >
-                    </review>
+            @auth
+                <div class="flex justify-between py-3 w-100">
+                    <div class="w-60 hidden md:block md:invisible"><span class="inline">|</span></div>
+                    <div class="flex-grow">
+                        <review
+                            :translation="{{ json_encode(trans('review')) }}"
+                            store-route="{{ route('review.store', ['book' => $book->slug]) }}"
+                        >
+                        </review>
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="text-right mt-1">
+                    {{__('review.not_logged_first_part')}}
+                    <a class="text-blue-400 hover:text-blue-200" href="{{route('login')}}">
+                        {{ __('review.not_logged_second_part') }}
+                    </a>
+                    {{ __('review.not_logged_third_part') }}
+                    <a class="text-blue-400 hover:text-blue-200" href="{{route('register')}}">
+                        {{ __('review.not_logged_fourth_part') }}
+                    </a>
+                </div>
+            @endauth
         </div>
     </div>
 </x-app-layout>

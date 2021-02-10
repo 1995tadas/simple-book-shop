@@ -22,7 +22,7 @@ class BookController extends Controller
     {
         $ratings = $book->ratings;
         $user_rating = null;
-        if ($ratings->isNotEmpty()) {
+        if ($ratings->isNotEmpty() && Auth()->check()) {
             $rated = $ratings->where('user_id', Auth()->user()->id)->first();
             if ($rated) {
                 $user_rating = $rated->rate;
