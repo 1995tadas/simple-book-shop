@@ -4,6 +4,7 @@ use App\Http\Controllers\GenreController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,5 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/{book}', [RatingController::class, 'destroy'])->name('destroy');
     });
 });
+
+Route::post('search/search', [SearchController::class, 'search'])->name('search');
 
 require __DIR__ . '/auth.php';

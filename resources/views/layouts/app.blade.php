@@ -12,7 +12,8 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+          integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -23,8 +24,12 @@
         <!-- Page Heading -->
         <header
             class="bg-white py-6 px-1 sm:px-6 lg:px-8 shadow flex items-center justify-center md:justify-between flex-wrap">
-            <x-input id="search" class="block p-1 mb-1 sm:mb-0" type="text" name="search" :value="old('search')"
-                     required/>
+            <form action="{{route('search')}}" method="post">
+                @csrf
+                <x-input id="search" class="block p-1 mb-1 sm:mb-0" type="text"
+                         name="search" :value="Session::has('search') ? Session::get('search'):''"
+                         maxlength="255" required/>
+            </form>
             <div class="flex whitespace-nowrap justify-center md:justify-between px-5 flex-wrap">
                 @guest()
                     <a class="bg-white hover:opacity-50 py-1 px-5 border-2 border-black text-black rounded"
