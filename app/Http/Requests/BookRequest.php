@@ -31,7 +31,7 @@ class BookRequest extends FormRequest
             'discount' => 'integer|distinct|between:0,100',
             'genres' => 'required|array|min:1',
             'genres.*' => 'integer|min:1|exists:genres,id',
-            'description' => 'string|required|between:1,255',
+            'description' => 'string|required|max:255',
             'cover' => 'required|image|mimes:jpeg,png,jpg'
         ];
     }

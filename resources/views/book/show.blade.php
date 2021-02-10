@@ -33,7 +33,7 @@
                                      :ratings="{{ $ratings }}"
                                      @if($user_rating)
                                      :user-rating="{{ $user_rating }}"
-                                     @endif
+                            @endif
                         ></book-rating>
                     @endauth
                 </div>
@@ -42,5 +42,9 @@
                 </p>
             </div>
         </div>
+        <review
+            :translation="{{ json_encode(trans('review')) }}"
+            store-route="{{ route('review.store', ['book' => $book->slug]) }}">
+        </review>
     </div>
 </x-app-layout>

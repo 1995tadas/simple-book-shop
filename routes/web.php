@@ -3,6 +3,7 @@
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,14 +28,18 @@ Route::group(['as' => 'book.'], function () {
     });
 });
 
-Route::group(['prefix' => 'genre', 'as' => 'genre.', 'middleware' => ['auth', 'admin']], function () {
-    Route::view('/create', 'genre.create')->name('create');
-    Route::post('/store', [GenreController::class, 'store'])->name('store');
-});
-
-Route::group(['as' => 'rating.', 'prefix' => 'rating', 'middleware' => 'auth'], function () {
-    Route::post('/{book}', [RatingController::class, 'store'])->name('store');
-    Route::delete('/{book}', [RatingController::class, 'destroy'])->name('destroy');
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'genre', 'as' => 'genre.', 'middleware' => 'admin'], function () {
+        Route::view('/create', 'genre.create')->name('create');
+        Route::post('/store', [GenreController::class, 'store'])->name('store');
+    });
+    Route::group(['as' => 'review.', 'prefix' => 'review'], function () {
+        Route::post('/{book}', [ReviewController::class, 'store'])->name('store');
+    });
+    Route::group(['as' => 'rating.', 'prefix' => 'rating'], function () {
+        Route::post('/{book}', [RatingController::class, 'store'])->name('store');
+        Route::delete('/{book}', [RatingController::class, 'destroy'])->name('destroy');
+    });
 });
 
 require __DIR__ . '/auth.php';
