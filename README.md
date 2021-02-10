@@ -1,62 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel Portfolio: Bookshop Task
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Explanations
 
-## About Laravel
+- [x] = task done
+- [ ] = still in progress
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Landing page (guest and user can access)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## List of all books
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [x] books displayed in 5x5 grid
 
-## Learning Laravel
+- [x] the book has a title with author, cover, and genre
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [x] the book can have multiple authors and genres
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- [x] all book covers must have consistent dimensions
 
-## Laravel Sponsors
+- [x] when there are more than 25 books on a page, there will be [next] and [previous] buttons books
+- [x] uploaded last week should have something to display that they are [NEW]
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- [x] the book may have a discount (by percentage), I also would like to see that in the listing [10%]
 
-### Premium Partners
+## Search bar
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+- [x] when searching for a book it should look for title and author
 
-## Contributing
+- [x] lists them in the same layout as the landing page
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- [x] a search bar must have a cookie that tracks the previous search you had Menu bar
 
-## Code of Conduct
+- [x] Login and registration button
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- [x] I drew some sketches, but the product doesn't need to look exactly like that example for guest and example for
+  user
 
-## Security Vulnerabilities
+## Login page
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- [x] a login page must have an email and password
 
-## License
+- [x] must have a "remember me"
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [x] ??? must have "forgot password"
+
+- [x] must have a register button
+
+## Registration page
+
+- [x] must have a log in button
+
+- [x] must have an email, password with show password in it, confirm password and date of birth
+
+## Book page
+
+- [x] must have description
+
+- [x] users can leave reviews
+
+- [x] users can rate book
+
+- [x] example of a single book
+
+## User Account
+
+- [ ] they can change the password
+
+- [ ] they can change email
+
+- [ ] they can report a book (for example if there are discrepancies on some of the listed books)
+
+- [ ] can upload a book to the listing, then the admin must confirm the book to be listed, then it appears on the
+  landing page and searches
+
+- [ ] can manage their books
+
+- [x] can give a review on a book (stars + comments)
+
+## Admin account
+
+- [ ] they can change the password
+
+- [ ] can reply to user's report
+
+- [ ] can manage and update all the books
