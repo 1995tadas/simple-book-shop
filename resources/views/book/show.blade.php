@@ -55,7 +55,7 @@
                         <span class="text-xs inline m-1 bg-blue-100 p-1 rounded">{{$review->created_at}}</span>
                         <span class="inline m-1 bg-blue-100 p-1 rounded">{{$review->users->name}}</span>
                     </div>
-                    <span class="flex-grow">{{$review->content}}</span>
+                    <span class="flex-1">{{$review->content}}</span>
                 </div>
             @endforeach
             <div class="flex justify-start md:justify-end">
