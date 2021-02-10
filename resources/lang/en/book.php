@@ -15,4 +15,5 @@ return [
     'free' => 'Free',
     'recent' => 'New',
     'reviews' => 'Reviews',
+    'show_passwords' => 'Show passwords'
 ];

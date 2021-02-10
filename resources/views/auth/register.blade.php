@@ -25,24 +25,14 @@
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required/>
             </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('auth_views.password')"/>
+            <!-- Passwords -->
+            <toggle-password-visibility
+                :inputs="{{ json_encode([__('auth_views.password') =>'password',
+                         __('auth_views.confirm_password') => 'password_confirmation'])}}"
+                checkbox-label="{{__('book.show_passwords')}}"
+            >
 
-                <x-input id="password" class="block mt-1 w-full"
-                         type="password"
-                         name="password"
-                         required autocomplete="new-password"/>
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('auth_views.confirm_password')"/>
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                         type="password"
-                         name="password_confirmation" required/>
-            </div>
+            </toggle-password-visibility>
 
             <!-- Date Of Birth -->
             <div class="mt-4">

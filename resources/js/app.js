@@ -23,6 +23,7 @@ Vue.component('select-repeater', require('./components/SelectRepeater.vue').defa
 Vue.component('input-repeater', require('./components/InputRepeater.vue').default);
 Vue.component('book-rating', require('./components/BookRating.vue').default);
 Vue.component('review', require('./components/Review.vue').default);
+Vue.component('toggle-password-visibility', require('./components/TogglePasswordVisibility.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
