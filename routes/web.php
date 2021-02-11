@@ -48,10 +48,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/panel', [AdminController::class, 'panel'])->name('panel');
         Route::get('/not-approved-books', [AdminController::class, 'notApprovedBooks'])->name('not_approved_books');
         Route::put('/approve-book/{book}', [AdminController::class, 'approveBook'])->name('approve_book');
+        Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
+        Route::get('/new-reports', [AdminController::class, 'newReports'])->name('new_reports');
     });
     Route::group(['as' => 'report.', 'prefix' => 'report'], function () {
         Route::get('/create/{book}', [ReportController::class, 'create'])->name('create');
         Route::post('/store', [ReportController::class, 'store'])->name('store');
+        Route::get('/show/{report}', [ReportController::class, 'show'])
+            ->middleware('admin')->name('show');
     });
 });
 

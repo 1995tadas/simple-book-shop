@@ -8,7 +8,7 @@
             <x-textarea class="mt-4 min-w-full" name="content" id="content" maxlength="255">
                 {{old('content')}}
             </x-textarea>
-            <x-input :type="hidden" :value="{{$book->id}}" :name="book_id">
+            <x-input type="hidden" value="{{$book->id}}" name="book_id" />
             <x-button>{{__('report.send')}}</x-button>
         </form>
     </x-form-card>
