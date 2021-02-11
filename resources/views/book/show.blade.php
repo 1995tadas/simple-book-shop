@@ -68,9 +68,12 @@
                                                 </button>
                                             </form>
                                         </div>
+                                        <x-link class="block mb-0 mr-0" href="{{route('book.edit', ['book' => $book->slug])}}">
+                                            <i class="far fa-edit"></i> {{ __('book.edit') }}
+                                        </x-link>
                                     @endif
                                     <x-link href="{{route('report.create', ['book' => $book->slug])}}">
-                                        <i class="fas fa-bug"> {{__('book.report')}}</i>
+                                        <i class="fas fa-bug"></i> {{__('book.report')}}
                                     </x-link>
                                 @endauth
                             </div>

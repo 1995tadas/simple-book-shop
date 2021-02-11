@@ -47,11 +47,9 @@
                     </div>
                 @endforeach
             </div>
-            @if(!isset($hidePagination) || !$hidePagination)
-                <div class="pt-3">
-                    {{ $books->links() }}
-                </div>
-            @endif
+            <div class="pt-3">
+                {{ $books->links() }}
+            </div>
     </div>
     @endif
 </x-app-layout>

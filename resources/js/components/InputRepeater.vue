@@ -15,7 +15,7 @@
 export default {
     props: {
         values: {
-            type: Object
+            type: [Object, Array],
         },
         id: {
             type: String,
@@ -32,7 +32,11 @@ export default {
     },
     created() {
         if (this.values) {
-            const valueArray = Object.values(this.values);
+            let valueArray = this.values;
+            if(typeof this.values === 'object'){
+                valueArray = Object.values(this.values);
+            }
+
             this.count = valueArray.length;
             if (this.count < 3) {
                 this.count++

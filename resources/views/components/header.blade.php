@@ -30,6 +30,9 @@
                     <x-header-button class="bg-white text-black ml-2">{{__('additional.panel')}}</x-header-button>
                 </a>
             @endif
+            <a href="{{ route('user.panel') }}">
+                <x-header-button class="bg-white text-black ml-2">{{__('book.panel')}}</x-header-button>
+            </a>
             <a href="{{ route('book.create') }}">
                 <x-header-button class="bg-white text-black ml-2">{{__('book.new')}}</x-header-button>
             </a>

@@ -20,7 +20,7 @@ class CreateBooksTable extends Migration
             $table->float('price')->nullable();
             $table->integer('discount')->nullable();
             $table->text('description');
-            $table->string('cover');
+            $table->string('cover')->nullable();
             $table->timestamp('approved')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();

@@ -72,7 +72,7 @@
 - [x] can upload a book to the listing, then the admin must confirm the book to be listed, then it appears on the
   landing page and searches
 
-- [ ] can manage their books
+- [x] can manage their books
 
 - [x] can give a review on a book (stars + comments)
 
@@ -82,4 +82,4 @@
 
 - [ ] can reply to user's report
 
-- [ ] can manage and update all the books
+- [x] can manage and update all the books

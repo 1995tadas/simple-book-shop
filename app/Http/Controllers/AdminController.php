@@ -22,9 +22,8 @@ class AdminController extends Controller
 
     public function notApprovedBooks()
     {
-        $books = Book::with(['authors', 'genres'])->notApproved()->latest()->get();
-        $hidePagination = true;
-        return view('book.index', compact('books', 'hidePagination'));
+        $books = Book::notApproved()->latest()->paginate(25);
+        return view('book.index', compact('books'));
     }
 
     public function approveBook(Book $book): \Illuminate\Http\RedirectResponse

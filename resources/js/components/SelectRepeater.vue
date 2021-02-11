@@ -22,7 +22,7 @@
 export default {
     props: {
         values:{
-            type: Object,
+            type: [Object, Array],
         },
         options: {
             type: Array,
@@ -45,7 +45,11 @@ export default {
     },
     created() {
         if (this.values) {
-            const valueArray = Object.values(this.values);
+            let valueArray = this.values;
+            if(typeof this.values === 'object'){
+                valueArray = Object.values(this.values);
+            }
+
             this.count = valueArray.length;
             if (this.count < 6 && this.count < this.options.length) {
                 this.count++

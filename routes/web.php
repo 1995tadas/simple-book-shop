@@ -7,6 +7,7 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,8 +27,11 @@ Route::group(['as' => 'book.'], function () {
         Route::group(['middleware' => 'auth'], function () {
             Route::get('/create', [BookController::class, 'create'])->name('create');
             Route::post('/store', [BookController::class, 'store'])->name('store');
-            Route::delete('/{book}', [BookController::class, 'destroy'])
-                ->middleware('author.admin')->name('destroy');
+            Route::group(['middleware' => 'author.admin'], function () {
+                Route::delete('/{book}', [BookController::class, 'destroy'])->name('destroy');
+                Route::get('edit/{book}', [BookController::class, 'edit'])->name('edit');
+                Route::put('/{book}', [BookController::class, 'update'])->name('update');
+            });
         });
         Route::get('/{book}', [BookController::class, 'show'])->name('show');
     });
@@ -56,6 +60,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [ReportController::class, 'store'])->name('store');
         Route::get('/show/{report}', [ReportController::class, 'show'])
             ->middleware('admin')->name('show');
+    });
+    Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
+        Route::get('/panel', [UserController::class, 'panel'])->name('panel');
+        Route::get('/approved-books', [UserController::class, 'approvedBooks'])->name('approved_books');
+        Route::get('/not-approved-books', [UserController::class, 'notApprovedBooks'])->name('not_approved_books');
     });
 });
 

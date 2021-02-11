@@ -9,6 +9,7 @@ return [
     'description' => 'Description',
     'cover' => 'Cover',
     'create' => 'Create',
+    'save' => 'Save',
     'new' => 'Add New Book',
     'empty' => 'No books found',
     'open' => 'Open',
@@ -18,7 +19,10 @@ return [
     'show_passwords' => 'Show passwords',
     'approve' => 'approve and publish',
     'delete' => 'delete book',
+    'edit' => 'edit book',
     'delete_success' => 'Book was deleted successfully',
     'wait_for_admin' => 'Book was saved.. it will be published after administrators approve',
-    'report' => 'Report'
+    'updated' => 'Book was updated',
+    'report' => 'Report',
+    'panel' => 'My panel'
 ];

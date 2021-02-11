@@ -32,7 +32,7 @@ class BookRequest extends FormRequest
             'genres' => 'required|array|min:1',
             'genres.*' => 'integer|min:1|exists:genres,id',
             'description' => 'string|required|max:255',
-            'cover' => 'required|image|mimes:jpeg,png,jpg'
+            'cover' => 'image|mimes:jpeg,png,jpg'
         ];
     }
 }
