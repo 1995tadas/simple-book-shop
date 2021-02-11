@@ -5,4 +5,5 @@ return [
     'sign_in' => 'Sign In',
     'sign_up' => 'Sign up',
     'log_out' => 'Log out',
+    'panel' => 'Admin panel'
 ];

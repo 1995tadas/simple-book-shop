@@ -14,7 +14,8 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::with(['authors', 'genres'])->latest()->simplePaginate(25);
+        $books = Book::with(['authors', 'genres'])->approved()
+            ->latest()->simplePaginate(25);
         return view('book.index', compact('books'));
     }
 
@@ -68,9 +69,30 @@ class BookController extends Controller
 
             $book->genres()->sync($validatedRequest['genres']);
 
-            return redirect()->route('book.index');
+            return redirect()->route('book.index')->with('success', __('book.wait_for_admin'));
         }
 
         abort(404);
+    }
+
+    public function destroy(Book $book): \Illuminate\Http\RedirectResponse
+    {
+        try {
+            $deleted = $book->delete();
+        } catch (\Exception $e) {
+            throw new \ErrorException('Something went wrong while deleting book');
+        }
+
+        if ($deleted) {
+            if (auth()->user()->is_admin) {
+                $redirect = redirect()->route('admin.not_approved_books');
+            } else {
+                $redirect = redirect()->route('book.index');
+            }
+
+            return $redirect->with('success', __('book.delete_success'));
+        }
+
+        abort(422);
     }
 }

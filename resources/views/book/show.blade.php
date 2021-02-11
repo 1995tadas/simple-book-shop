@@ -28,13 +28,45 @@
                         </div>
                     </div>
                     @auth
-                        <book-rating store-route="{{ route('rating.store', ['book' => $book->slug]) }}"
-                                     destroy-route="{{ route('rating.destroy', ['book' => $book->slug]) }}"
-                                     :ratings="{{ $ratings }}"
-                                     @if($user_rating)
-                                     :user-rating="{{ $user_rating }}"
-                            @endif
-                        ></book-rating>
+                        <div>
+                            <book-rating store-route="{{ route('rating.store', ['book' => $book->slug]) }}"
+                                         destroy-route="{{ route('rating.destroy', ['book' => $book->slug]) }}"
+                                         :ratings="{{ $ratings }}"
+                                         @if($user_rating)
+                                         :user-rating="{{ $user_rating }}"
+                                @endif
+                            ></book-rating>
+                            <div class="text-center">
+                                @if(!$book->approved)
+                                    <div class="text-green-400 hover:text-green-200">
+                                        <form action="{{route('admin.approve_book', ['book' => $book->slug])}}"
+                                              method="post">
+                                            @csrf
+                                            @method('put')
+                                            <button class="focus:outline-none">
+                                                <i class="fas fa-check-square"></i>
+                                                <span>{{ __('book.approve') }}</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
+                                @auth()
+                                    @if(auth()->user()->is_admin || auth()->user()->id === $book->user_id)
+                                        <div class="text-red-400 hover:text-red-200">
+                                            <form action="{{route('book.destroy', ['book' => $book->slug])}}"
+                                                  method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="focus:outline-none">
+                                                    <i class="fas fa-ban"></i>
+                                                    <span>{{ __('book.delete') }}</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                @endauth
+                            </div>
+                        </div>
                     @endauth
                 </div>
                 <p class="h-3/4 text-2xl flex items-center text-justify md:text-left mt-1 md:mt-0">
@@ -75,13 +107,13 @@
             @else
                 <div class="text-right mt-1">
                     {{__('review.not_logged_first_part')}}
-                    <a class="text-blue-400 hover:text-blue-200" href="{{route('login')}}">
+                    <x-link href="{{route('login')}}">
                         {{ __('review.not_logged_second_part') }}
-                    </a>
+                    </x-link>
                     {{ __('review.not_logged_third_part') }}
-                    <a class="text-blue-400 hover:text-blue-200" href="{{route('register')}}">
+                    <x-link href="{{route('register')}}">
                         {{ __('review.not_logged_fourth_part') }}
-                    </a>
+                    </x-link>
                 </div>
             @endauth
         </div>

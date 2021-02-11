@@ -9,7 +9,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'price', 'discount', 'description', 'cover', 'user_id'];
+    protected $fillable = ['title', 'slug', 'price', 'discount', 'description', 'cover', 'approved', 'user_id'];
 
     public function getRouteKeyName(): string
     {
@@ -44,5 +44,15 @@ class Book extends Model
     public function reviews(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function scopeApproved($query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->where('approved', '!=', null);
+    }
+
+    public function scopeNotApproved($query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->where('approved', null);
     }
 }

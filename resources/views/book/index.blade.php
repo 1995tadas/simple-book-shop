@@ -1,5 +1,10 @@
 <x-app-layout>
     <div class="p-3 text-center">
+        @if(session()->has('success'))
+            <x-success>
+                {{ session()->get('success') }}
+            </x-success>
+        @endif
         @if($books->isEmpty())
             <div class="text-xl pt-3">{{__('book.empty')}}</div>
         @else
@@ -42,9 +47,11 @@
                     </div>
                 @endforeach
             </div>
-            <div class="pt-3">
-                {{ $books->links() }}
-            </div>
+            @if(!isset($hidePagination) || !$hidePagination)
+                <div class="pt-3">
+                    {{ $books->links() }}
+                </div>
+            @endif
     </div>
     @endif
 </x-app-layout>
