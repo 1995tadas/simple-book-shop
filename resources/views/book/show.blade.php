@@ -1,5 +1,10 @@
 <x-app-layout>
     <div class="p-3">
+        @if(session()->has('success'))
+            <x-success>
+                {{ session()->get('success') }}
+            </x-success>
+        @endif
         <div class="flex flex-col md:flex-row md:h-2/4">
             <div class="flex justify-center md:mr-5">
                 <img class="h-96" alt="{{$book->title.' cover'}}"
@@ -64,6 +69,9 @@
                                             </form>
                                         </div>
                                     @endif
+                                    <x-link href="{{route('report.create', ['book' => $book->slug])}}">
+                                        <i class="fas fa-bug"> {{__('book.report')}}</i>
+                                    </x-link>
                                 @endauth
                             </div>
                         </div>

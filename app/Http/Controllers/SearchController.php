@@ -11,7 +11,7 @@ class SearchController extends Controller
     {
         session()->flash('search', $request->search);
 
-        $books = Book::where('title', 'like', '%' . $request->search . '%')
+        $books = Book::where('title', 'like', '%' . $request->search . '%')->approved()
             ->OrwhereHas('authors', function ($query) use ($request) {
                 return $query->where('name', 'like', '%' . $request->search . '%');
             })->simplePaginate(25);

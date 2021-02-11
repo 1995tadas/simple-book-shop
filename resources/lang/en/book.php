@@ -19,5 +19,6 @@ return [
     'approve' => 'approve and publish',
     'delete' => 'delete book',
     'delete_success' => 'Book was deleted successfully',
-    'wait_for_admin' => 'Book was saved.. it will be published after administrators approve'
+    'wait_for_admin' => 'Book was saved.. it will be published after administrators approve',
+    'report' => 'Report'
 ];

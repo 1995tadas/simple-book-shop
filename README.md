@@ -67,9 +67,9 @@
 
 - [ ] they can change email
 
-- [ ] they can report a book (for example if there are discrepancies on some of the listed books)
+- [x] they can report a book (for example if there are discrepancies on some of the listed books)
 
-- [ ] can upload a book to the listing, then the admin must confirm the book to be listed, then it appears on the
+- [x] can upload a book to the listing, then the admin must confirm the book to be listed, then it appears on the
   landing page and searches
 
 - [ ] can manage their books

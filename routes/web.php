@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/panel', [AdminController::class, 'panel'])->name('panel');
         Route::get('/not-approved-books', [AdminController::class, 'notApprovedBooks'])->name('not_approved_books');
         Route::put('/approve-book/{book}', [AdminController::class, 'approveBook'])->name('approve_book');
+    });
+    Route::group(['as' => 'report.', 'prefix' => 'report'], function () {
+        Route::get('/create/{book}', [ReportController::class, 'create'])->name('create');
+        Route::post('/store', [ReportController::class, 'store'])->name('store');
     });
 });
 
