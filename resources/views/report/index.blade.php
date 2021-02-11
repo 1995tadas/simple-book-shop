@@ -19,7 +19,6 @@
                     </span>
                     <span class="text-xs">{{__('report.date') .': '.$report->created_at }}</span>
                 </li>
-
                 {{ $reports->links() }}
             @empty
                 <li>{{__('report.empty')}}</li>
