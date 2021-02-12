@@ -35,18 +35,24 @@ class UserController extends Controller
 
     public function changePassword(ChangePasswordRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $user = User::where('id', auth()->user()->id)->firstOrFail();
-        if (Hash::check($request->old_password, $user->password)) {
-            $updated = $user->update(['password' => Hash::make($request->password)]);
-            if ($updated) {
-                return redirect()->route('user.panel')->with('changed', __('user.password_changed'));
+        if ($request->email && auth()->user()->is_admin) {
+            $user = User::where('email', $request->email)->firstOrFail();
+            $route = 'admin.panel';
+        } else {
+            $user = User::where('id', auth()->user()->id)->firstOrFail();
+            $route = 'user.panel';
+            if (!Hash::check($request->old_password, $user->password)) {
+                throw ValidationException::withMessages([
+                    'old_password' => [__('user.password_wrong')],
+                ]);
             }
-
-            abort(404);
         }
 
-        throw ValidationException::withMessages([
-            'old_password' => [__('user.password_wrong')],
-        ]);
+        $updated = $user->update(['password' => Hash::make($request->password)]);
+        if ($updated) {
+            return redirect()->route($route)->with('changed', __('user.password_changed'));
+        }
+
+        abort(404);
     }
 }
