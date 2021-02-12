@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\Report;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -13,8 +12,6 @@ class AdminController extends Controller
         $data = [
             'approvedBooksCount' => Book::approved()->count(),
             'notApprovedBooksCount' => Book::notApproved()->count(),
-            'newReportsCount' => Report::new()->count(),
-            'allReportsCount' => Report::count(),
         ];
 
         return view('admin.panel', $data);
@@ -37,21 +34,5 @@ class AdminController extends Controller
         }
 
         abort(404);
-    }
-
-    public function reports(bool $new = false)
-    {
-        $reports = Report::with('user', 'book');
-        if ($new) {
-            $reports = $reports->new();
-        }
-
-        $reports = $reports->latest()->paginate(25);
-        return view('report.index', compact('reports'));
-    }
-
-    public function newReports()
-    {
-        return $this->reports(true);
     }
 }
