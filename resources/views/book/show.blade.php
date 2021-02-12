@@ -7,9 +7,16 @@
         @endif
         <div class="flex flex-col md:flex-row md:h-2/4">
             <div class="flex justify-center md:mr-5">
-                <img class="h-96" alt="{{$book->title.' cover'}}"
-                     title="{{$book->title}}"
-                     src="{{asset('storage/' . $book->cover)}}">
+                @if($book->cover)
+                    <img class="h-96" alt="{{$book->title. __('book.cover')}}"
+                         title="{{$book->title}}"
+                         src="{{asset('storage/' . $book->cover)}}">
+                @else
+                    <img class="h-96" alt="{{$book->title . __('book.placeholder')}}"
+                         title="{{$book->title}}"
+                         src="{{asset('images/book-placeholder.jpg')}}"
+                    >
+                @endif
             </div>
             <div class="flex-1 text-left">
                 <h1 class="text-3xl border-b-4 border-black">{{$book->title}}</h1>
@@ -68,7 +75,8 @@
                                                 </button>
                                             </form>
                                         </div>
-                                        <x-link class="block mb-0 mr-0" href="{{route('book.edit', ['book' => $book->slug])}}">
+                                        <x-link class="block mb-0 mr-0"
+                                                href="{{route('book.edit', ['book' => $book->slug])}}">
                                             <i class="far fa-edit"></i> {{ __('book.edit') }}
                                         </x-link>
                                     @endif

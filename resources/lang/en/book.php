@@ -8,6 +8,7 @@ return [
     'genres' => 'Genres',
     'description' => 'Description',
     'cover' => 'Cover',
+    'placeholder' => 'placeholder',
     'create' => 'Create',
     'save' => 'Save',
     'new' => 'Add New Book',

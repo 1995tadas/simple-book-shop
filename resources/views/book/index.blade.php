@@ -24,9 +24,16 @@
                                 </span>
                                 </div>
                             @endif
-                            <img class="hover:opacity-50" alt="{{$book->title.' cover'}}"
-                                 title="{{__('book.open').' '.$book->title}}"
-                                 src="{{asset('storage/' . $book->cover)}}">
+                            @if($book->cover)
+                                <img class="hover:opacity-50" alt="{{$book->title . __('book.cover')}}"
+                                     title="{{__('book.open') . ' ' . $book->title}}"
+                                     src="{{asset('storage/' . $book->cover)}}">
+                            @else
+                                <img class="hover:opacity-50" alt="{{$book->title . __('book.placeholder')}}"
+                                     title="{{__('book.open') . ' ' . $book->title}}"
+                                     src="{{asset('images/book-placeholder.jpg')}}"
+                                >
+                            @endif
                         </a>
                         <h2 class="text-xl">{{__('book.title')}}</h2>
                         <h3 class="pl-3 py-1 bg-gray-200 rounded">{{$book->title}}</h3>
