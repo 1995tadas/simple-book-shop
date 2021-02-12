@@ -33,7 +33,7 @@ class Book extends Model
 
     public function genres(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Genre::class, 'book_genres');
+        return $this->belongsToMany(Genre::class);
     }
 
     public function ratings(): \Illuminate\Database\Eloquent\Relations\HasMany
