@@ -78,7 +78,7 @@
 
 ## Admin account
 
-- [ ] they can change the password
+- [x] they can change the password
 
 - [ ] can reply to user's report
 
