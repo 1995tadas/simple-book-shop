@@ -46,7 +46,7 @@
             <div class="flex items-center justify-end mt-4">
                 <div>
                     <a class="block text-right mb-1 underline text-sm text-gray-600 hover:text-gray-900"
-                       href="{{ route('password.request') }}">
+                       href="{{ route('register') }}">
                         {{ __('auth_views.no_account') }}
                     </a>
 

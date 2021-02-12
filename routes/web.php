@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/panel', [UserController::class, 'panel'])->name('panel');
         Route::get('/approved-books', [UserController::class, 'approvedBooks'])->name('approved_books');
         Route::get('/not-approved-books', [UserController::class, 'notApprovedBooks'])->name('not_approved_books');
+        Route::put('/change-password', [UserController::class, 'changePassword'])->name('change_password');
     });
     Route::group(['as' => 'author.', 'prefix' => 'author'], function () {
         Route::get('/autocomplete', [AuthorController::class, 'autocomplete'])->name('autocomplete');

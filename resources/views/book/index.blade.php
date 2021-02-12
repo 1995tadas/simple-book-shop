@@ -8,9 +8,9 @@
         @if($books->isEmpty())
             <div class="text-xl pt-3">{{__('book.empty')}}</div>
         @else
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-20 box-border">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 box-border">
                 @foreach($books as $book)
-                    <div class="text-left">
+                    <div class="text-left bg-white p-4">
                         <a href="{{route('book.show', ['book' => $book->slug])}}" class="relative block">
                             @if((\Carbon\Carbon::parse($book->created_at))->gt(\Carbon\Carbon::now()->subWeek()))
                                 <span class="absolute top-2 right-2 text-red-600 rounded font-bold bg-white px-1">
@@ -35,16 +35,16 @@
                                 >
                             @endif
                         </a>
-                        <h2 class="text-xl">{{__('book.title')}}</h2>
-                        <h3 class="pl-3 py-1 bg-gray-200 rounded">{{$book->title}}</h3>
-                        <h2 class="text-xl">{{__('book.author')}}</h2>
-                        <ul class="pl-3 py-1 bg-gray-200 rounded">
+                        <h2 class="text-sm">{{__('book.title')}}</h2>
+                        <h3 class="text-xs pl-3 py-1 bg-gray-200 rounded">{{$book->title}}</h3>
+                        <h2 class="text-sm">{{__('book.author')}}</h2>
+                        <ul class="text-xs pl-3 py-1 bg-gray-200 rounded">
                             @foreach($book->authors as $author)
                                 <li>{{$author->name}}</li>
                             @endforeach
                         </ul>
-                        <h2 class="text-xl">{{__('book.price')}}</h2>
-                        <h3 class="pl-3 py-1 bg-gray-200 rounded">
+                        <h2 class="text-sm">{{__('book.price')}}</h2>
+                        <h3 class="text-xs pl-3 py-1 bg-gray-200 rounded">
                             @if($book->price == 0)
                                 {{__('book.free')}}
                             @else

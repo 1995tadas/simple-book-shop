@@ -33,7 +33,6 @@
                          __('auth_views.confirm_password') => 'password_confirmation'])}}"
                 checkbox-label="{{__('book.show_passwords')}}"
             >
-
             </toggle-password-visibility>
 
             <!-- Date Of Birth -->

@@ -63,7 +63,7 @@
 
 ## User Account
 
-- [ ] they can change the password
+- [x] they can change the password
 
 - [ ] they can change email
 
