@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\RatingController;
@@ -65,6 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/panel', [UserController::class, 'panel'])->name('panel');
         Route::get('/approved-books', [UserController::class, 'approvedBooks'])->name('approved_books');
         Route::get('/not-approved-books', [UserController::class, 'notApprovedBooks'])->name('not_approved_books');
+    });
+    Route::group(['as' => 'author.', 'prefix' => 'author'], function () {
+        Route::get('/autocomplete', [AuthorController::class, 'autocomplete'])->name('autocomplete');
     });
 });
 

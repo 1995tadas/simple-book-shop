@@ -1,12 +1,16 @@
 <template>
     <div class="w-full m-auto">
         <template v-for="item in count">
-            <input class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300
+            <input list="auto-complete" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300
                           focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                           block mt-1 w-full"
                    @blur="newInput(item)"
+                   @input="autoComplete(item)"
                    :type="type" :id="id" :name="name + '[' + item + ']'"
                    v-model="selected[item - 1]" :required="item === 1">
+            <datalist v-if="autoCompleteValues" id="auto-complete">
+                <option v-for="value in autoCompleteValues" :value="value"></option>
+            </datalist>
         </template>
     </div>
 </template>
@@ -16,6 +20,9 @@ export default {
     props: {
         values: {
             type: [Object, Array],
+        },
+        autoCompleteRoute: {
+            type: String
         },
         id: {
             type: String,
@@ -30,10 +37,17 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            selected: [],
+            count: 1,
+            autoCompleteValues: []
+        }
+    },
     created() {
         if (this.values) {
             let valueArray = this.values;
-            if(typeof this.values === 'object'){
+            if (typeof this.values === 'object') {
                 valueArray = Object.values(this.values);
             }
 
@@ -43,12 +57,6 @@ export default {
             }
 
             this.selected = valueArray;
-        }
-    },
-    data() {
-        return {
-            selected: [],
-            count: 1,
         }
     },
     methods: {
@@ -67,6 +75,19 @@ export default {
 
             if (item === this.count && this.count < 3 && this.selected.length > 0) {
                 this.count++
+            }
+        },
+        autoComplete(item) {
+            if (this.autoCompleteRoute) {
+                axios.get(this.autoCompleteRoute, {
+                    params: {
+                        search: this.selected[item - 1],
+                    }
+                }).then((response) => {
+                    this.autoCompleteValues = response.data;
+                }).catch((error) => {
+
+                });
             }
         }
     }
