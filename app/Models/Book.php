@@ -26,9 +26,9 @@ class Book extends Model
         $this->attributes['description'] = ucfirst($value);
     }
 
-    public function authors(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function authors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->hasMany(Author::class);
+        return $this->belongsToMany(Author::class);
     }
 
     public function genres(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

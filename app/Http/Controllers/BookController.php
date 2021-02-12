@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
-use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
-use App\Services\ImageService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use App\Services\BookService;
+use Illuminate\Support\Arr;
 
 class BookController extends Controller
 {
@@ -49,30 +47,24 @@ class BookController extends Controller
 
     public function store(BookRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $imageService = new ImageService();
-        $path = $imageService->crop($request->file('cover'), 'covers/', 600, 1000);
-        $validatedRequest = $request->validated();
-        $validatedRequest['cover'] = $path;
-        $validatedRequest['user_id'] = Auth::user()->id;
-        $validatedRequest['slug'] = Str::of($request->title)->slug('-');
-        $book = Book::create($validatedRequest);
+        $bookService = new BookService();
+        $bookService->storeOrUpdate($request);
+        return redirect()->route('book.index')->with('success', __('book.wait_for_admin'));
+    }
 
-        if ($book) {
-            foreach ($validatedRequest['authors'] as $author) {
-                if ($author !== null) {
-                    Author::create([
-                        'name' => $author,
-                        'book_id' => $book->id
-                    ]);
-                }
-            }
+    public function edit(Book $book)
+    {
+        $authors = $book->authors()->pluck('name');
+        $genresOld = Arr::pluck($book->genres->toArray(), 'id');
+        $genres = Genre::all('id AS value', 'title AS option');
+        return view('book.edit', compact('genres', 'genresOld', 'authors', 'book'));
+    }
 
-            $book->genres()->sync($validatedRequest['genres']);
-
-            return redirect()->route('book.index')->with('success', __('book.wait_for_admin'));
-        }
-
-        abort(404);
+    public function update(BookRequest $request, Book $book): \Illuminate\Http\RedirectResponse
+    {
+        $bookService = new BookService();
+        $bookService->storeOrUpdate($request, $book);
+        return redirect()->route('book.index')->with('success', __('book.updated'));
     }
 
     public function destroy(Book $book): \Illuminate\Http\RedirectResponse
