@@ -41,7 +41,7 @@
 
 - [x] must have a "remember me"
 
-- [x] ??? must have "forgot password"
+- [x] must have "forgot password"
 
 - [x] must have a register button
 
@@ -80,6 +80,6 @@
 
 - [x] they can change the password
 
-- [ ] can reply to user's report
+- [x] can reply to user's report
 
 - [x] can manage and update all the books
