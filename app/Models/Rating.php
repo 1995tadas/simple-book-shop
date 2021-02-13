@@ -10,9 +10,4 @@ class Rating extends Model
     use HasFactory;
 
     protected $fillable = ['rate', 'book_id', 'user_id'];
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
 }
