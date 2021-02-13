@@ -1,85 +1,27 @@
-# Laravel Portfolio: Bookshop Task
+# Book shop
 
-### Explanations
+You have old dusty books laying on your table? Or reading doesn't excite you anymore?
+Say no more... this website is all you ever needed.
+Sell your book on this fabulous website... it's completely FREE.
+If you want to deploy this masterpiece on your machine you can find instruction bellow!
 
-- [x] = task done
-- [ ] = still in progress
+## Technologies used
 
-## Landing page (guest and user can access)
 
-## List of all books
+- Php 8.0.1
+- Laravel 8.26.1
+- VueJs 2.6.12
+- MySql 8.0.22
+- TailwindCss
+- Composer 2.0.9 for php packages
+- NodeJs 6.14.11 for npm packages
 
-- [x] books displayed in 5x5 grid
+## How to deploy
 
-- [x] the book has a title with author, cover, and genre
-
-- [x] the book can have multiple authors and genres
-
-- [x] all book covers must have consistent dimensions
-
-- [x] when there are more than 25 books on a page, there will be [next] and [previous] buttons books
-- [x] uploaded last week should have something to display that they are [NEW]
-
-- [x] the book may have a discount (by percentage), I also would like to see that in the listing [10%]
-
-## Search bar
-
-- [x] when searching for a book it should look for title and author
-
-- [x] lists them in the same layout as the landing page
-
-- [x] a search bar must have a cookie that tracks the previous search you had Menu bar
-
-- [x] Login and registration button
-
-- [x] I drew some sketches, but the product doesn't need to look exactly like that example for guest and example for
-  user
-
-## Login page
-
-- [x] a login page must have an email and password
-
-- [x] must have a "remember me"
-
-- [x] must have "forgot password"
-
-- [x] must have a register button
-
-## Registration page
-
-- [x] must have a log in button
-
-- [x] must have an email, password with show password in it, confirm password and date of birth
-
-## Book page
-
-- [x] must have description
-
-- [x] users can leave reviews
-
-- [x] users can rate book
-
-- [x] example of a single book
-
-## User Account
-
-- [x] they can change the password
-
-- [x] they can change email
-
-- [x] they can report a book (for example if there are discrepancies on some of the listed books)
-
-- [x] can upload a book to the listing, then the admin must confirm the book to be listed, then it appears on the
-  landing page and searches
-
-- [x] can manage their books
-
-- [x] can give a review on a book (stars + comments)
-
-## Admin account
-
-- [x] they can change the password
-
-- [x] can reply to user's report
-
-- [x] can manage and update all the books
+1. Copy all files from this repo
+1. Make sure you have right technologies installed
+1. Copy .env.example and rename it to .env (if you using unix operating system just run this command in app root `mv .env.example .env`)
+1. Run `composer install` and `npm install`(needed dependencies will be installed)
+1. Compile all VueJs and other files by `npm run dev ` or `npm run watch` for development,`npm run prod` for production
+1. Then run `php artisan key:generate` and replace database credentials inside .env file
+1. Migrate tables by running `php artisan migrate`
