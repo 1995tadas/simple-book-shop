@@ -65,7 +65,7 @@
 
 - [x] they can change the password
 
-- [ ] they can change email
+- [x] they can change email
 
 - [x] they can report a book (for example if there are discrepancies on some of the listed books)
 

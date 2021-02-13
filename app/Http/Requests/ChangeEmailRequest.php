@@ -4,10 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChangePasswordRequest extends FormRequest
+class ChangeEmailRequest extends FormRequest
 {
 
-    protected $errorBag = 'change_password';
+    protected $errorBag = 'change_email';
 
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,8 @@ class ChangePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required_without:old_password|exists:users,email|email',
-            'old_password' => 'required_without:email|string|min:8',
-            'password' => 'required|different:old_password|confirmed|string|min:8',
+            'new_email' => 'required|unique:users,email|email',
+            'current_email' => 'nullable|exists:users,email|email',
         ];
     }
 }

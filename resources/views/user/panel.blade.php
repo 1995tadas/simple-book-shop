@@ -12,6 +12,7 @@
         <div class="mt-4">
             <h1 class="text-xl border-b-2 border-black">{{__('user.my_account')}}</h1>
             <x-change-password></x-change-password>
+            <x-change-email></x-change-email>
         </div>
     </div>
 </x-app-layout>

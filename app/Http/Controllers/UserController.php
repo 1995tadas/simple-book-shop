@@ -2,31 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangeEmailRequest;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Mail\ChangeEmail;
 use App\Models\Book;
 use App\Models\User;
 use App\Services\BookService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function panel()
+    public function panel(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $approvedBooksCount = Book::where('user_id', Auth::user()->id)->Approved()->count();
         $notApprovedBooksCount = Book::where('user_id', Auth::user()->id)->notApproved()->count();
         return view('user.panel', compact('approvedBooksCount', 'notApprovedBooksCount'));
     }
 
-    public function approvedBooks(bool $approved = true)
+    public function approvedBooks(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $bookService = new BookService();
         $books = $bookService->getBooks(true, true);
         return view('book.index', compact('books'));
     }
 
-    public function notApprovedBooks()
+    public function notApprovedBooks(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $bookService = new BookService();
         $books = $bookService->getBooks(false, true);
@@ -50,7 +53,26 @@ class UserController extends Controller
 
         $updated = $user->update(['password' => Hash::make($request->password)]);
         if ($updated) {
-            return redirect()->route($route)->with('changed', __('user.password_changed'));
+            return redirect()->route($route)->with('password_message', __('user.password_changed'));
+        }
+
+        abort(404);
+    }
+
+    public function changeEmail(ChangeEmailRequest $request): \Illuminate\Http\RedirectResponse
+    {
+        $currentEmail = Auth::user()->email;
+        Mail::to($request->new_email)->send(new ChangeEmail($currentEmail, $request->new_email));
+        return redirect()->route('user.panel')->with('email_message', __('user.email_send'));
+    }
+
+    public function verifyEmail(ChangeEmailRequest $request): \Illuminate\Http\RedirectResponse
+    {
+        if (isset($request->current_email) && auth()->user()->email === $request->current_email) {
+            $updated = User::where('email', $request->current_email)->update(['email' => $request->new_email]);
+            if ($updated) {
+                return redirect()->route('user.panel')->with('email_message', __('user.email_changed'));
+            }
         }
 
         abort(404);

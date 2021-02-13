@@ -6,6 +6,7 @@ return [
     'confirm_password' => 'Confirm Password',
     'new_password' => 'New password',
     'change_password' => 'Change password',
+    'change_email' => 'Change email',
     'date_of_birth' => 'Date Of Birth',
     'registered' => 'Already Registered ?',
     'no_account' => 'Want to register ?',

@@ -7,7 +7,7 @@ use App\Models\Book;
 
 class SearchController extends Controller
 {
-    public function search(SearchRequest $request)
+    public function __invoke(SearchRequest $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         session()->flash('search', $request->search);
 
