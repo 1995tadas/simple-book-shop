@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    public function panel()
+    public function panel(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $data = [
             'approvedBooksCount' => Book::approved()->count(),
@@ -17,7 +17,7 @@ class AdminController extends Controller
         return view('admin.panel', $data);
     }
 
-    public function notApprovedBooks()
+    public function notApprovedBooks(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $books = Book::notApproved()->latest()->paginate(25);
         return view('book.index', compact('books'));

@@ -22,21 +22,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['as' => 'book.'], function () {
-    Route::get('/', [BookController::class, 'index'])->name('index');
-    Route::group(['prefix' => 'book'], function () {
-        Route::group(['middleware' => 'auth'], function () {
-            Route::get('/create', [BookController::class, 'create'])->name('create');
-            Route::post('/store', [BookController::class, 'store'])->name('store');
-            Route::group(['middleware' => 'author.admin'], function () {
-                Route::delete('/{book}', [BookController::class, 'destroy'])->name('destroy');
-                Route::get('edit/{book}', [BookController::class, 'edit'])->name('edit');
-                Route::put('/{book}', [BookController::class, 'update'])->name('update');
-            });
-        });
-        Route::get('/{book}', [BookController::class, 'show'])->name('show');
-    });
-});
+Route::get('/', [BookController::class, 'index'])->name('book.index');
+Route::resource('book', BookController::class)->except('index');
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'genre', 'as' => 'genre.', 'middleware' => 'admin'], function () {
         Route::view('/create', 'genre.create')->name('create');

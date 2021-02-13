@@ -10,14 +10,20 @@ use Illuminate\Support\Arr;
 
 class BookController extends Controller
 {
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth')->except('show');
+        $this->middleware('author.admin')->only(['edit', 'update', 'destroy']);
+    }
+
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $books = Book::with(['authors', 'genres'])->approved()
             ->latest()->simplePaginate(25);
         return view('book.index', compact('books'));
     }
 
-    public function show(Book $book)
+    public function show(Book $book): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $ratings = $book->ratings;
         $user_rating = null;
@@ -39,7 +45,7 @@ class BookController extends Controller
         return view('book.show', $data);
     }
 
-    public function create()
+    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $genres = Genre::all('id AS value', 'title AS option');
         return view('book.create', compact('genres'));
@@ -52,7 +58,7 @@ class BookController extends Controller
         return redirect()->route('book.index')->with('success', __('book.wait_for_admin'));
     }
 
-    public function edit(Book $book)
+    public function edit(Book $book): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $authors = $book->authors()->pluck('name');
         $genresOld = Arr::pluck($book->genres->toArray(), 'id');
