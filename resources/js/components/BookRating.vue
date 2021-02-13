@@ -1,9 +1,12 @@
+s
 <template>
     <div class="text-center my-2">
         <ul class="whitespace-nowrap">
             <li class="inline" v-for="star in 5" @mouseover="currentStar = star" @mouseleave="currentStar = 0">
-                <a href="" @click.prevent="store(star)" class="text-black text-2xl hover:text-red-400"
-                   :class="{'text-red-400': currentStar >= star,'text-blue-400': rated >= star}">
+                <a href="" :style="[!storeRoute ? {'cursor':'default'} : '']" @click.prevent="store(star)"
+                   class="text-black text-2xl"
+                   :class="{'text-red-400': currentStar >= star && storeRoute,'text-blue-400': rated >= star}"
+                >
                     <i class="far fa-star"></i>
                 </a>
             </li>
@@ -17,11 +20,9 @@ export default {
     props: {
         storeRoute: {
             type: String,
-            required: true
         },
         destroyRoute: {
             type: String,
-            required: true
         },
         ratings: {
             type: Number,
@@ -44,24 +45,24 @@ export default {
     },
     methods: {
         store(star) {
-            if (this.rated === star) {
-                this.destroy(star);
-                return;
-            }
+            if (this.storeRoute) {
+                if (this.rated === star) {
+                    this.destroy(star);
+                    return;
+                }
 
-            axios.post(this.storeRoute, {
-                rate: star,
-            }).then((response) => {
-                this.rated = star;
-            }).catch((error) => {
-                console.log(error);
-            });
+                axios.post(this.storeRoute, {
+                    rate: star,
+                }).then((response) => {
+                    this.rated = star;
+                }).catch((error) => {
+                });
+            }
         },
         destroy(star) {
             axios.delete(this.destroyRoute).then((response) => {
                 this.rated = 0;
             }).catch((error) => {
-                console.log(error);
             });
         }
     }

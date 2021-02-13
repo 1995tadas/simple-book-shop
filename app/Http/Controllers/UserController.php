@@ -19,7 +19,8 @@ class UserController extends Controller
     {
         $approvedBooksCount = Book::where('user_id', Auth::user()->id)->Approved()->count();
         $notApprovedBooksCount = Book::where('user_id', Auth::user()->id)->notApproved()->count();
-        return view('user.panel', compact('approvedBooksCount', 'notApprovedBooksCount'));
+        $user = Auth()->user();
+        return view('user.panel', compact('approvedBooksCount', 'notApprovedBooksCount', 'user'));
     }
 
     public function approvedBooks(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

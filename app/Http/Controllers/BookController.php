@@ -12,7 +12,7 @@ class BookController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('show');
+        $this->middleware('auth')->except('show', 'index');
         $this->middleware('author.admin')->only(['edit', 'update', 'destroy']);
     }
 

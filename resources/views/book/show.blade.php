@@ -39,17 +39,20 @@
                             </ul>
                         </div>
                     </div>
-                    @auth
-                        <div>
-                            <book-rating store-route="{{ route('rating.store', ['book' => $book->slug]) }}"
-                                         destroy-route="{{ route('rating.destroy', ['book' => $book->slug]) }}"
-                                         :ratings="{{ $ratings }}"
-                                         @if($user_rating)
-                                         :user-rating="{{ $user_rating }}"
-                                @endif
-                            ></book-rating>
+                    <div>
+                        <book-rating
+                            :ratings="{{ $ratings }}"
+                            @auth()
+                            store-route="{{ route('rating.store', ['book' => $book->slug]) }}"
+                            destroy-route="{{ route('rating.destroy', ['book' => $book->slug]) }}"
+                            @endauth
+                            @if($user_rating)
+                            :user-rating="{{ $user_rating }}"
+                            @endif>
+                        </book-rating>
+                        @auth
                             <div class="text-center">
-                                @if(!$book->approved)
+                                @if(!$book->approved && auth()->user()->is_admin)
                                     <div class="text-green-400 hover:text-green-200">
                                         <form action="{{route('admin.approve_book', ['book' => $book->slug])}}"
                                               method="post">
@@ -62,31 +65,29 @@
                                         </form>
                                     </div>
                                 @endif
-                                @auth()
-                                    @if(auth()->user()->is_admin || auth()->user()->id === $book->user_id)
-                                        <div class="text-red-400 hover:text-red-200">
-                                            <form action="{{route('book.destroy', ['book' => $book->slug])}}"
-                                                  method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button class="focus:outline-none">
-                                                    <i class="fas fa-ban"></i>
-                                                    <span>{{ __('book.delete') }}</span>
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <x-link class="block mb-0 mr-0"
-                                                href="{{route('book.edit', ['book' => $book->slug])}}">
-                                            <i class="far fa-edit"></i> {{ __('book.edit') }}
-                                        </x-link>
-                                    @endif
-                                    <x-link href="{{route('report.create', ['book' => $book->slug])}}">
-                                        <i class="fas fa-bug"></i> {{__('book.report')}}
+                                @if(auth()->user()->is_admin || auth()->user()->id === $book->user_id)
+                                    <div class="text-red-400 hover:text-red-200">
+                                        <form action="{{route('book.destroy', ['book' => $book->slug])}}"
+                                              method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="focus:outline-none">
+                                                <i class="fas fa-ban"></i>
+                                                <span>{{ __('book.delete') }}</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <x-link class="block mb-0 mr-0"
+                                            href="{{route('book.edit', ['book' => $book->slug])}}">
+                                        <i class="far fa-edit"></i> {{ __('book.edit') }}
                                     </x-link>
-                                @endauth
+                                @endif
+                                <x-link href="{{route('report.create', ['book' => $book->slug])}}">
+                                    <i class="fas fa-bug"></i> {{__('book.report')}}
+                                </x-link>
                             </div>
-                        </div>
-                    @endauth
+                        @endauth
+                    </div>
                 </div>
                 <p class="h-3/4 text-2xl flex items-center text-justify md:text-left mt-1 md:mt-0">
                     {{$book->description}}

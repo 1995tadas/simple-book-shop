@@ -14,7 +14,7 @@
     @endif
     <!-- Book Title -->
         <div>
-            <x-label for="book" :value="__('book.title')"/>
+            <x-label for="book" :value="__('book.title').'*'"/>
 
             <x-input id="book" class="block mt-1 w-full" type="text" name="title"
                      value="{{old('title') ? old('title') : (isset($fieldTitle) ? $fieldTitle: '')}}"
@@ -25,7 +25,7 @@
         </div>
         <!-- Book author -->
         <div class="mt-4">
-            <x-label for="authors" :value="__('book.author')"/>
+            <x-label for="authors" :value="__('book.author').'*'"/>
             <input-repeater
                 id="authors" type="text" name="authors"
                 auto-complete-route="{{ route('author.autocomplete') }}"
@@ -54,7 +54,7 @@
             </div>
         @endif
         <div class="mt-4">
-            <x-label for="genres" :value="__('book.genres')"/>
+            <x-label for="genres" :value="__('book.genres').'*'"/>
             <select-repeater
                 @if(old('genres'))
                 :values="{{ json_encode(old('genres'))}}"
@@ -64,7 +64,7 @@
                 :options="{{$genres}}" id="genres" name="genres"></select-repeater>
         </div>
         <div class="mt-4">
-            <x-label for="description" :value="__('book.description')"/>
+            <x-label for="description" :value="__('book.description').'*'"/>
             <x-textarea id="description" class="block mt-1 w-full" name="description" maxlength="255" required>
                 {{old('description') ? old('description') : (isset($fieldDescription) ? $fieldDescription : '')}}
             </x-textarea>

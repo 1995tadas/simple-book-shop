@@ -15,6 +15,6 @@
         </x-input>
     </div>
     <x-button class="mt-4">
-        {{ __('auth_views.change_email') }}
+        {{ __('user.change_email') }}
     </x-button>
 </form>

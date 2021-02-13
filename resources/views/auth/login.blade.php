@@ -17,7 +17,7 @@
 
         <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('auth_views.email')"/>
+                <x-label for="email" :value="__('user.email').'*'"/>
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
                          autofocus/>
@@ -25,7 +25,7 @@
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('auth_views.password')"/>
+                <x-label for="password" :value="__('user.password').'*'"/>
 
                 <x-input id="password" class="block mt-1 w-full"
                          type="password"
@@ -39,7 +39,7 @@
                     <input id="remember_me" type="checkbox"
                            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                            name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('auth_views.remember') }}</span>
+                    <span class="ml-2 text-sm text-gray-600">{{ __('user.remember') }}</span>
                 </label>
             </div>
 
@@ -47,19 +47,19 @@
                 <div>
                     <a class="block text-right mb-1 underline text-sm text-gray-600 hover:text-gray-900"
                        href="{{ route('register') }}">
-                        {{ __('auth_views.no_account') }}
+                        {{ __('user.no_account') }}
                     </a>
 
                     @if (Route::has('password.request'))
                         <a class="block text-right underline text-sm text-gray-600 hover:text-gray-900"
                            href="{{ route('password.request') }}">
-                            {{ __('auth_views.forgot') }}
+                            {{ __('user.forgot') }}
                         </a>
                     @endif
                 </div>
 
                 <x-button class="ml-3">
-                    {{ __('auth_views.login') }}
+                    {{ __('user.login') }}
                 </x-button>
             </div>
         </form>

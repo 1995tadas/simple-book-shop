@@ -7,7 +7,7 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('auth_views.forgot_text') }}
+            {{ __('user.forgot_text') }}
         </div>
 
         <!-- Session Status -->
@@ -21,14 +21,14 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('auth_views.email')" />
+                <x-label for="email" :value="__('user.email')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 <x-button>
-                    {{ __('auth_views.email_link') }}
+                    {{ __('user.email_link') }}
                 </x-button>
             </div>
         </form>
