@@ -41,7 +41,7 @@
                     </div>
                     <div>
                         <book-rating
-                            :ratings="{{ $ratings }}"
+                            :ratings="{{ round($ratings, 2) }}"
                             @auth()
                             store-route="{{ route('rating.store', ['book' => $book->slug]) }}"
                             destroy-route="{{ route('rating.destroy', ['book' => $book->slug]) }}"

@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Genre;
 use App\Services\BookService;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -76,6 +77,7 @@ class BookController extends Controller
     public function destroy(Book $book): \Illuminate\Http\RedirectResponse
     {
         try {
+            Storage::delete($book->cover);
             $deleted = $book->delete();
         } catch (\Exception $e) {
             throw new \ErrorException('Something went wrong while deleting book');
