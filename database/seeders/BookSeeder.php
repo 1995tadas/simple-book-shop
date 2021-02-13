@@ -8,6 +8,7 @@ use App\Models\Genre;
 use App\Models\Rating;
 use App\Models\Review;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class BookSeeder extends Seeder
 {
@@ -18,11 +19,14 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
+        $images = Storage::allFiles('/covers');
+        Storage::delete($images);
+
         Book::factory()
             ->has(Author::factory()->count(3))
             ->has(Genre::factory()->count(9))
-            ->has(Review::factory()->count(50))
-            ->has(Rating::factory()->count(100))
+            ->has(Review::factory()->count(25))
+            ->has(Rating::factory()->count(15))
             ->count(10)->create();
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 
 class ReportController extends Controller
 {
-    public function create(Book $book)
+    public function create(Book $book): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('report.create', compact('book'));
     }

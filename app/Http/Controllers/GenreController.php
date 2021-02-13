@@ -11,7 +11,7 @@ class GenreController extends Controller
     {
         $created = Genre::create($request->validated());
         if($created){
-            return redirect()->back()->with('success', __('genre.success'));
+            return redirect()->route('genre.create')->with('success', __('genre.success'));
         }
 
         abort(404);

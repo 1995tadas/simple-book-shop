@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="p-3">
         @if(session()->has('success'))
-            <x-success>
+            <x-success class="mb-5">
                 {{ session()->get('success') }}
             </x-success>
         @endif
@@ -24,7 +24,7 @@
                     <div class="mt-2">
                         <div>
                             <h2 class="text-xl inline">{{__('book.author')}}</h2>
-                            <ul class="ml-2 inline font-bold">
+                            <ul class="ml-2 inline font-bold leading-9">
                                 @foreach($authors as $author)
                                     <li class="inline m-1 bg-blue-100 p-1 rounded">{{$author->name}}</li>
                                 @endforeach
@@ -32,7 +32,7 @@
                         </div>
                         <div class="mt-3">
                             <h2 class="text-xl inline">{{__('book.genres')}}</h2>
-                            <ul class="ml-2 inline font-bold">
+                            <ul class="ml-2 inline font-bold leading-9">
                                 @foreach($genres as $genre)
                                     <li class="inline m-1 bg-blue-100 p-1 rounded">{{$genre->title}}</li>
                                 @endforeach
@@ -89,7 +89,7 @@
                         @endauth
                     </div>
                 </div>
-                <p class="h-3/4 text-2xl flex items-center text-justify md:text-left mt-1 md:mt-0">
+                <p class="h-3/4 text-2xl md:text-left mt-1 md:mt-0">
                     {{$book->description}}
                 </p>
             </div>
@@ -102,12 +102,14 @@
                 </div>
             </div>
             @foreach($reviews as $review)
-                <div class="flex justify-between py-3 w-100 break-all">
-                    <div class="w-100 md:w-60 text-right">
-                        <span class="text-xs inline m-1 bg-blue-100 p-1 rounded">{{$review->created_at}}</span>
-                        <span class="inline m-1 bg-blue-100 p-1 rounded">{{$review->users->name}}</span>
+                <div class="flex justify-between flex-col md:flex-row py-3 w-100">
+                    <div class="w-100 md:w-60 flex-left md:text-right">
+                        <div class="text-xs m-0 md:m-1 mb-3">
+                            <span class="bg-blue-100 p-1 rounded">{{$review->created_at}}</span>
+                        </div>
+                        <span class="m-0 md:m-1 bg-blue-100 p-1 rounded">{{$review->users->name}}</span>
                     </div>
-                    <span class="flex-1">{{$review->content}}</span>
+                    <span class="flex-1 mt-1 md:mt-0 break-all">{{$review->content}}</span>
                 </div>
             @endforeach
             <div class="flex justify-start md:justify-end">

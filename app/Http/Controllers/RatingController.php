@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RatingController extends Controller
 {
-    public function store(RatingRequest $request, Book $book)
+    public function store(RatingRequest $request, Book $book): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $created = Rating::updateOrCreate(
             ['book_id' => $book->id, 'user_id' => Auth::user()->id],
@@ -22,7 +22,7 @@ class RatingController extends Controller
         return response('created', 201);
     }
 
-    public function destroy(Book $book)
+    public function destroy(Book $book): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $deleted = Rating::where('book_id', $book->id)->where('user_id', Auth::user()->id)->delete();
         if (!$deleted) {
@@ -31,5 +31,4 @@ class RatingController extends Controller
 
         return response('deleted', 204);
     }
-
 }

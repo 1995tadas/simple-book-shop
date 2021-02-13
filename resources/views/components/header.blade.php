@@ -11,9 +11,9 @@
                      maxlength="255" required/>
         </form>
     </div>
-    <div class="flex whitespace-nowrap justify-center md:justify-between px-5 flex-wrap">
+    <div class="flex whitespace-nowrap mt-2 md:mt-0 justify-center md:justify-between px-5 flex-wrap">
         @guest()
-            <a class="bg-white hover:opacity-50 py-1 px-5 border-2 border-black text-black rounded"
+            <a class="bg-white hover:opacity-50 py-1 m-1 px-5 border-2 border-black text-black rounded"
                href="{{ route('login') }}">
                 <button class="focus:outline-none" type="button">{{__('additional.sign_in')}}
                 </button>
@@ -30,13 +30,13 @@
                     <x-header-button class="bg-white text-black ml-2">{{__('additional.panel')}}</x-header-button>
                 </a>
             @endif
-            <a href="{{ route('user.panel') }}">
+            <a class="mt-1 md:mt-0" href="{{ route('user.panel') }}">
                 <x-header-button class="bg-white text-black ml-2">{{__('book.panel')}}</x-header-button>
             </a>
-            <a href="{{ route('book.create') }}">
+            <a class="mt-1 md:mt-0" href="{{ route('book.create') }}">
                 <x-header-button class="bg-white text-black ml-2">{{__('book.new')}}</x-header-button>
             </a>
-            <form action="{{ route('logout') }}" method="post">
+            <form class="mt-1 md:mt-0" action="{{ route('logout') }}" method="post">
                 @csrf()
                 <x-header-button class="bg-black text-white ml-2">{{__('additional.log_out')}}</x-header-button>
             </form>
