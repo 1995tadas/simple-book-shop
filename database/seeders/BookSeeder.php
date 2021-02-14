@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Genre;
 use App\Models\Rating;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,14 +20,20 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
-        $images = Storage::allFiles('/covers');
-        Storage::delete($images);
+        $exists = Storage::exists('/covers');
+        if ($exists) {
+            $images = Storage::allFiles('/covers');
+            Storage::delete($images);
+        }
 
-        Book::factory()
-            ->has(Author::factory()->count(3))
-            ->has(Genre::factory()->count(9))
-            ->has(Review::factory()->count(25))
-            ->has(Rating::factory()->count(15))
-            ->count(10)->create();
+        User::factory()->has(
+            Book::factory()
+                ->has(Author::factory()->count(rand(1, 3)))
+                ->has(Genre::factory()->count(rand(1, 9)))
+                ->has(Review::factory()->count(rand(0, 10)))
+                ->has(Rating::factory()->count(rand(0, 10)))
+                ->count(rand(5, 10)))
+            ->count(5)->create();
     }
+
 }

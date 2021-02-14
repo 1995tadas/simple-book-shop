@@ -25,5 +25,4 @@ return [
     'wait_for_admin' => 'Book was saved.. it will be published after administrators approve',
     'updated' => 'Book was updated',
     'report' => 'Report',
-    'panel' => 'My panel'
 ];

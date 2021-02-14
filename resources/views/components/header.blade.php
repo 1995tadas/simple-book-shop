@@ -27,11 +27,11 @@
         @else
             @if(auth()->user()->is_admin)
                 <a href="{{ route('admin.panel') }}">
-                    <x-header-button class="bg-white text-black ml-2">{{__('additional.panel')}}</x-header-button>
+                    <x-header-button class="bg-white text-black ml-2">{{__('additional.admin_panel')}}</x-header-button>
                 </a>
             @endif
             <a class="mt-1 md:mt-0" href="{{ route('user.panel') }}">
-                <x-header-button class="bg-white text-black ml-2">{{__('book.panel')}}</x-header-button>
+                <x-header-button class="bg-white text-black ml-2">{{__('additional.user_panel')}}</x-header-button>
             </a>
             <a class="mt-1 md:mt-0" href="{{ route('book.create') }}">
                 <x-header-button class="bg-white text-black ml-2">{{__('book.new')}}</x-header-button>

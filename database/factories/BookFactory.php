@@ -6,7 +6,7 @@ use App\Models\Book;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class BookFactory extends Factory
 {
@@ -24,18 +24,22 @@ class BookFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->word;
-        $slug = Str::slug($title);
-        $image = $this->faker->image('storage/app/public/covers', 600, 1000, 'cats');
+        $directory = '/covers';
+        $exists = Storage::exists($directory);
+        if (!$exists) {
+            Storage::makeDirectory($directory);
+        }
+
+        $image = $this->faker->image('storage/app/public' . $directory, 600, 1000, 'books');
 
         return [
-            'title' => $title,
-            'slug' => $slug,
+            'title' => $this->faker->word,
+            'slug' => $this->faker->unique()->slug,
             'price' => $this->faker->randomFloat(2, 0, 5000),
             'discount' => $this->faker->numberBetween(0, 100),
             'description' => $this->faker->paragraph,
             'cover' => str_replace('storage/app/public/', '', $image),
-            'approved' => Carbon::now(),
+            'approved' => $this->faker->boolean ? Carbon::now() : null,
             'user_id' => User::factory()->create()->id,
         ];
     }
