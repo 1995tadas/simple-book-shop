@@ -15,7 +15,7 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function panel(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function panel()
     {
         $approvedBooksCount = Book::where('user_id', Auth::user()->id)->Approved()->count();
         $notApprovedBooksCount = Book::where('user_id', Auth::user()->id)->notApproved()->count();
@@ -23,14 +23,14 @@ class UserController extends Controller
         return view('user.panel', compact('approvedBooksCount', 'notApprovedBooksCount', 'user'));
     }
 
-    public function approvedBooks(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function approvedBooks()
     {
         $bookService = new BookService();
         $books = $bookService->getBooks(true, true);
         return view('book.index', compact('books'));
     }
 
-    public function notApprovedBooks(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function notApprovedBooks()
     {
         $bookService = new BookService();
         $books = $bookService->getBooks(false, true);
