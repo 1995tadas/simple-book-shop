@@ -18,7 +18,7 @@
                 <button class="focus:outline-none" type="button">{{__('additional.sign_in')}}
                 </button>
             </a>
-            <a class="bg-black hover:opacity-50 py-1 px-5 border-2 border-black text-white rounded ml-2"
+            <a class="bg-black hover:opacity-50 py-1 m-1 px-5 border-2 border-black text-white rounded ml-2"
                href="{{ route('register') }}">
                 <button class="focus:outline-none" type="button">
                     {{__('additional.sign_up')}}
@@ -26,7 +26,7 @@
             </a>
         @else
             @if(auth()->user()->is_admin)
-                <a href="{{ route('admin.panel') }}">
+                <a class="mt-1 md:mt-0" href="{{ route('admin.panel') }}">
                     <x-header-button class="bg-white text-black ml-2">{{__('additional.admin_panel')}}</x-header-button>
                 </a>
             @endif

@@ -27,11 +27,11 @@ class BookController extends Controller
     public function show(Book $book)
     {
         $ratings = $book->ratings;
-        $user_rating = null;
+        $userRating = null;
         if ($ratings->isNotEmpty() && Auth()->check()) {
             $rated = $ratings->where('user_id', Auth()->user()->id)->first();
             if ($rated) {
-                $user_rating = $rated->rate;
+                $userRating = $rated->rate;
             }
         }
 
@@ -40,8 +40,9 @@ class BookController extends Controller
             'authors' => $book->authors,
             'genres' => $book->genres,
             'reviews' => $book->reviews()->latest()->simplePaginate(3),
-            'ratings' => $ratings->IsEmpty() ? 0 : $ratings->avg('rate'),
-            'user_rating' => $user_rating
+            'averageRatings' => $ratings->IsEmpty() ? 0 : $ratings->avg('rate'),
+            'ratersCount' => $ratings->count(),
+            'userRating' => $userRating
         ];
         return view('book.show', $data);
     }

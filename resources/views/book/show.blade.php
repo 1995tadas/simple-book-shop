@@ -41,13 +41,14 @@
                     </div>
                     <div>
                         <book-rating
-                            :ratings="{{ round($ratings, 2) }}"
+                            :average="{{ round($averageRatings, 2) }}"
+                            :raters-count="{{ $ratersCount }}"
                             @auth()
                             store-route="{{ route('rating.store', ['book' => $book->slug]) }}"
                             destroy-route="{{ route('rating.destroy', ['book' => $book->slug]) }}"
                             @endauth
-                            @if($user_rating)
-                            :user-rating="{{ $user_rating }}"
+                            @if($userRating)
+                            :user-rating="{{ $userRating }}"
                             @endif>
                         </book-rating>
                         @auth

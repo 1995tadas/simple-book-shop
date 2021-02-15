@@ -12,7 +12,7 @@ If you want to deploy this masterpiece on your machine you can find instruction 
 - Laravel 8.26.1
 - VueJs 2.6.12
 - MySql 8.0.22
-- TailwindCss
+- TailwindCss 2.0.3
 - Composer 2.0.9 for php packages
 - NodeJs 6.14.11 for npm packages
 
@@ -22,6 +22,7 @@ If you want to deploy this masterpiece on your machine you can find instruction 
 1. Make sure you have right technologies installed
 1. Copy .env.example and rename it to .env (if you using unix operating system just run this command in app root `mv .env.example .env`)
 1. Run `composer install` and `npm install`(needed dependencies will be installed)
+1. Run `php artisan storage:link` to create link to storage files
 1. Compile all VueJs and other files by `npm run dev ` or `npm run watch` for development,`npm run prod` for production
-1. Then run `php artisan key:generate` and replace database credentials inside .env file
+1. Then run `php artisan key:generate` and replace database and email credentials inside .env file
 1. Migrate tables by running `php artisan migrate`

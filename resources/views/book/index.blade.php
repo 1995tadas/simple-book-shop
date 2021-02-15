@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="p-3 text-center">
         @if(session()->has('success'))
-            <x-success>
+            <x-success class="mb-2">
                 {{ session()->get('success') }}
             </x-success>
         @endif
