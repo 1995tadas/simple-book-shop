@@ -6,7 +6,7 @@
                           block mt-1 w-full"
                    @blur="newInput(item)"
                    @input="autoComplete(item)"
-                   :type="type" :id="id" :name="name + '[' + item + ']'"
+                   :type="type" :id="id + '-' + item" :name="name + '[' + item + ']'"
                    v-model="selected[item - 1]" :required="item === 1">
             <datalist v-if="autoCompleteValues" id="auto-complete">
                 <option v-for="value in autoCompleteValues" :value="value"></option>

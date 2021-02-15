@@ -25,7 +25,7 @@
         </div>
         <!-- Book author -->
         <div class="mt-4">
-            <x-label for="authors" :value="__('book.author').'*'"/>
+            <x-label for="authors-1" :value="__('book.authors').'*'"/>
             <input-repeater
                 id="authors" type="text" name="authors"
                 auto-complete-route="{{ route('author.autocomplete') }}"
@@ -54,7 +54,7 @@
             </div>
         @endif
         <div class="mt-4">
-            <x-label for="genres" :value="__('book.genres').'*'"/>
+            <x-label for="genres-1" :value="__('book.genres').'*'"/>
             <select-repeater
                 @if(old('genres'))
                 :values="{{ json_encode(old('genres'))}}"

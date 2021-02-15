@@ -4,7 +4,7 @@
             <select class="rounded-md shadow-sm
                     border-gray-300 focus:border-indigo-300
                     focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    :id="id" :name="name + '[' + item + ']'"
+                    :id="id + '-' + item" :name="name + '[' + item + ']'"
                     v-model="selected[item - 1]"
                     :required="item === 1"
                     @change="newSelect(item)">

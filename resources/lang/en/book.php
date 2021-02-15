@@ -2,7 +2,7 @@
 
 return [
     'title' => 'Title',
-    'author' => 'Author',
+    'authors' => 'Authors',
     'price' => 'Price',
     'discount' => 'Discount',
     'genres' => 'Genres',
@@ -12,7 +12,7 @@ return [
     'create' => 'Create',
     'save' => 'Save',
     'new' => 'Add New Book',
-    'empty' => 'No books found',
+    'empty' => 'There is no books',
     'open' => 'Open',
     'free' => 'Free',
     'recent' => 'New',
@@ -25,4 +25,7 @@ return [
     'wait_for_admin' => 'Book was saved.. it will be published after administrators approve',
     'updated' => 'Book was updated',
     'report' => 'Report',
+    'confirm' => 'Are you sure ?',
+    'books' => 'books',
+    'found' => 'Found',
 ];

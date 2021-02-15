@@ -29,8 +29,14 @@ class BookController extends Controller
                     ->OrwhereHas('authors', function ($query) use ($search) {
                         return $query->where('name', 'like', '%' . $search . '%');
                     });
-            })->approved()->latest()->simplePaginate();
-        return view('book.index', compact('books'));
+            })->approved();
+        $data = [];
+        if ($request->search) {
+            $data['numberOfBooks'] = $books->count();
+        }
+
+        $data['books'] = $books->latest()->simplePaginate();
+        return view('book.index', $data);
     }
 
     public function show(Book $book)
@@ -48,7 +54,7 @@ class BookController extends Controller
             'book' => $book,
             'authors' => $book->authors,
             'genres' => $book->genres,
-            'reviews' => $book->reviews()->latest()->simplePaginate(3),
+            'reviews' => $book->reviews()->with('users')->latest()->simplePaginate(3),
             'averageRatings' => $ratings->IsEmpty() ? 0 : $ratings->avg('rate'),
             'ratersCount' => $ratings->count(),
             'userRating' => $userRating

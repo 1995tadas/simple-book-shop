@@ -5,6 +5,14 @@
                 {{ session()->get('success') }}
             </x-success>
         @endif
+        <h1 class="text-3xl mb-3 capitalize bold">
+            @if(isset($title))
+                {{$title}}
+            @elseif(isset($numberOfBooks))
+                {{__('book.found').' '.$numberOfBooks}}
+            @endif
+            {{__('book.books')}}
+        </h1>
         @if($books->isEmpty())
             <div class="text-xl pt-3">{{__('book.empty')}}</div>
         @else
@@ -19,7 +27,7 @@
                             @endif
                             @if($book->discount)
                                 <div class="absolute inset-x-0 bottom-0 h-16 text-center">
-                                <span class="text-red-600 rounded text-2xl font-bold bg-white px-1">
+                                <span class="text-red-600 rounded text-xl font-bold bg-white px-1">
                                     <i class="fas fa-tags"></i> {{$book->discount.' %'}}
                                 </span>
                                 </div>
@@ -57,6 +65,6 @@
             <div class="pt-3">
                 {{ $books->links() }}
             </div>
+        @endif
     </div>
-    @endif
 </x-app-layout>

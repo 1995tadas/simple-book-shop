@@ -27,14 +27,16 @@ class UserController extends Controller
     {
         $bookService = new BookService();
         $books = $bookService->getBooks(true, true);
-        return view('book.index', compact('books'));
+        $title = __('user.approved');
+        return view('book.index', compact('books', 'title'));
     }
 
     public function notApprovedBooks()
     {
         $bookService = new BookService();
         $books = $bookService->getBooks(false, true);
-        return view('book.index', compact('books'));
+        $title = __('user.not_approved');
+        return view('book.index', compact('books', 'title'));
     }
 
     public function changePassword(ChangePasswordRequest $request): \Illuminate\Http\RedirectResponse

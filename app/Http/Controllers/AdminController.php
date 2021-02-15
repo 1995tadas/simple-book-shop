@@ -20,7 +20,8 @@ class AdminController extends Controller
     public function notApprovedBooks()
     {
         $books = Book::notApproved()->latest()->paginate(25);
-        return view('book.index', compact('books'));
+        $title = __('admin.admin') . ' ' . __('admin.not_approved');
+        return view('book.index', compact('books', 'title'));
     }
 
     public function approveBook(Book $book): \Illuminate\Http\RedirectResponse

@@ -8,7 +8,7 @@
     <x-auth-validation-errors class="mb-4" :errors="$errors"/>
 
     @if(session()->has('success'))
-        <x-success>
+        <x-success class="mb-3">
             {{ session()->get('success') }}
         </x-success>
     @endif

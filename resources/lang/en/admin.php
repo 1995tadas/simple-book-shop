@@ -5,6 +5,7 @@ return [
     'books' => 'Books',
     'not_approved' => 'Not approved',
     'approved' => 'Approved',
+    'admin' => 'Admin',
     'approved_success' => 'Approved successfully',
     'author' => 'Author',
     'user' => 'Users',

@@ -41,7 +41,7 @@
                     </div>
                     <div>
                         <book-rating
-                            :average="{{ round($averageRatings, 2) }}"
+                            :average="{{ $averageRatings }}"
                             :raters-count="{{ $ratersCount }}"
                             @auth()
                             store-route="{{ route('rating.store', ['book' => $book->slug]) }}"
@@ -72,7 +72,7 @@
                                               method="post">
                                             @csrf
                                             @method('delete')
-                                            <button class="focus:outline-none">
+                                            <button class="focus:outline-none" onclick="return confirm('Are you sure?')" >
                                                 <i class="fas fa-ban"></i>
                                                 <span>{{ __('book.delete') }}</span>
                                             </button>
