@@ -4,12 +4,16 @@
         <a href="{{route('book.index')}}" title="{{__('additional.home')}}" class="hover:bg-blue-50 rounded w-10 mr-2">
             <x-application-logo></x-application-logo>
         </a>
-        <form action="{{route('search')}}" method="post">
-            @csrf
+        <form action="{{route('book.index')}}" method="get">
             <x-input id="search" class="p-1 mb-1 sm:mb-0" type="text"
-                     name="search" :value="Session::has('search') ? Session::get('search'):''"
+                     name="search" :value="Request::has('search') ? Request::get('search'): Cookie::get('search')"
                      maxlength="255" required/>
         </form>
+        @if(Cookie::has('search'))
+            @php
+                Cookie::queue(Cookie::forget('search'));
+            @endphp
+        @endif
     </div>
     <div class="flex whitespace-nowrap mt-2 md:mt-0 justify-center md:justify-between px-5 flex-wrap">
         @guest()

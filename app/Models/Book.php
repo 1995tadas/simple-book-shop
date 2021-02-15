@@ -11,6 +11,8 @@ class Book extends Model
 
     protected $fillable = ['title', 'slug', 'price', 'discount', 'description', 'cover', 'approved', 'user_id'];
 
+    protected $perPage = 25;
+
     public function getRouteKeyName(): string
     {
         return 'slug';

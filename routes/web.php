@@ -58,6 +58,4 @@ Route::group(['middleware' => 'auth'], function () {
     });
 });
 
-Route::post('search/search', SearchController::class)->name('search');
-
 require __DIR__ . '/auth.php';

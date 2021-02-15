@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
+use App\Http\Requests\SearchRequest;
 use App\Models\Book;
 use App\Models\Genre;
 use App\Services\BookService;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
@@ -17,10 +19,17 @@ class BookController extends Controller
         $this->middleware('author.admin')->only(['edit', 'update', 'destroy']);
     }
 
-    public function index()
+    public function index(SearchRequest $request)
     {
-        $books = Book::with(['authors', 'genres'])->approved()
-            ->latest()->simplePaginate(25);
+        $books = Book::with(['authors', 'genres'])
+            ->when($request->search, function ($query) use ($request) {
+                $search = $request->search;
+                Cookie::queue('search', $search);
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->OrwhereHas('authors', function ($query) use ($search) {
+                        return $query->where('name', 'like', '%' . $search . '%');
+                    });
+            })->approved()->latest()->simplePaginate();
         return view('book.index', compact('books'));
     }
 
