@@ -12,16 +12,22 @@ class ReviewController extends Controller
 
     public function store(ReviewRequest $request, Book $book)
     {
+        $user = Auth::user();
+
         $created = Review::create([
             'content' => $request->content,
             'book_id' => $book->id,
-            'user_id' => Auth::user()->id
+            'user_id' => $user->id
         ]);
 
         if (!$created) {
             return response('failed', 422);
         }
 
-        return response('created', 201);
+        return response()->json([
+            'created_at' => $created->created_at,
+            'user' => $user->name,
+            'content' => $created->content
+        ], 201);
     }
 }

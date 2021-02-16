@@ -95,7 +95,7 @@
                 </p>
             </div>
         </div>
-        <div class="my-2">
+        <div id="reviews" class="my-2">
             <div class="flex justify-between py-3 w-100">
                 <div class="w-60 hidden md:block md:invisible"><span class="inline">|</span></div>
                 <div class="flex-grow">
@@ -123,6 +123,7 @@
                         <review
                             :translation="{{ json_encode(trans('review')) }}"
                             store-route="{{ route('review.store', ['book' => $book->slug]) }}"
+                            :page="{{ $reviews->currentPage() }}"
                         >
                         </review>
                     </div>
