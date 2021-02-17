@@ -1,5 +1,7 @@
 @component('mail::message')
-<h1>{{$report}}</h1>
+# {{$data['content']}}
 
-<a href="{{$bookLink}}">{{$bookTitle}}</a>
+{{$data['from']}}
+
+[{{$data['bookTitle']}}]({{$data['bookLink']}})
 @endcomponent

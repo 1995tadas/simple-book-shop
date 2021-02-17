@@ -45,9 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/verify-email', [UserController::class, 'verifyEmail'])->name('verify_email');
     });
 
-    Route::group(['as' => 'review.', 'prefix' => 'review'], function () {
-        Route::post('/{book}', [ReviewController::class, 'store'])->name('store');
-    });
+    Route::post('review/{book}', [ReviewController::class, 'store'])->name('review.store');
 
     Route::group(['as' => 'rating.', 'prefix' => 'rating'], function () {
         Route::post('/{book}', [RatingController::class, 'store'])->name('store');
@@ -59,9 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [ReportController::class, 'send'])->name('send');
     });
 
-    Route::group(['as' => 'author.', 'prefix' => 'author'], function () {
-        Route::get('/autocomplete', [AuthorController::class, 'autocomplete'])->name('autocomplete');
-    });
+    Route::get('author/autocomplete', [AuthorController::class, 'autocomplete'])->name('author.autocomplete');
 });
 
 require __DIR__ . '/auth.php';

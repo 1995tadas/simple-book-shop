@@ -10,22 +10,16 @@ class Report extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $report;
-    public $bookLink;
-    public $bookTitle;
+    public $data;
 
     /**
      * Create a new message instance.
      *
-     * @param string $report
-     * @param string $bookLink
-     * @param string $bookTitle
+     * @param array $data
      */
-    public function __construct(string $report, string $bookLink, string $bookTitle)
+    public function __construct(array $data)
     {
-        $this->report = $report;
-        $this->bookLink = $bookLink;
-        $this->bookTitle = $bookTitle;
+        $this->data = $data;
     }
 
     /**
@@ -36,7 +30,7 @@ class Report extends Mailable
     public function build()
     {
         return $this->markdown('emails.report')
-            ->to('admin@admin.com')
+            ->to(config('app.to.address'))
             ->subject(__('report.report'));
     }
 }
