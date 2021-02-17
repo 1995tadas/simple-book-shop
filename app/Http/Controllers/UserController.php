@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Swift_TransportException;
 
 class UserController extends Controller
 {
@@ -65,7 +66,12 @@ class UserController extends Controller
     public function changeEmail(ChangeEmailRequest $request): \Illuminate\Http\RedirectResponse
     {
         $currentEmail = Auth::user()->email;
-        Mail::to($request->new_email)->send(new ChangeEmail($currentEmail, $request->new_email));
+        try {
+            Mail::to($request->new_email)->send(new ChangeEmail($currentEmail, $request->new_email));
+        } catch (Swift_TransportException $e){
+            throw new Swift_TransportException('Your email credentials probably are not set up correctly');
+        }
+
         return redirect()->route('user.panel')->with('email_message', __('user.email_send'));
     }
 

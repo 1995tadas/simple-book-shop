@@ -14,8 +14,7 @@
                 @else
                     <img class="h-96" alt="{{$book->title . __('book.placeholder')}}"
                          title="{{$book->title}}"
-                         src="{{asset('images/book-placeholder.jpg')}}"
-                    >
+                         src="{{asset('images/book-placeholder.jpg')}}">
                 @endif
             </div>
             <div class="flex-1 text-left">
@@ -23,7 +22,7 @@
                 <div class="flex flex-col md:flex-row justify-between">
                     <div class="mt-2">
                         <div>
-                            <h2 class="text-xl inline">{{__('book.author')}}</h2>
+                            <h2 class="text-xl inline">{{__('book.authors')}}</h2>
                             <ul class="ml-2 inline font-bold leading-9">
                                 @foreach($authors as $author)
                                     <li class="inline m-1 bg-blue-100 p-1 rounded">{{$author->name}}</li>
@@ -66,13 +65,14 @@
                                         </form>
                                     </div>
                                 @endif
-                                @if(auth()->user()->is_admin || auth()->user()->id === $book->user_id)
+                                @if(auth()->user()->is_admin || auth()->id() === $book->user_id)
                                     <div class="text-red-400 hover:text-red-200">
                                         <form action="{{route('book.destroy', ['book' => $book->slug])}}"
                                               method="post">
                                             @csrf
                                             @method('delete')
-                                            <button class="focus:outline-none" onclick="return confirm('Are you sure?')" >
+                                            <button class="focus:outline-none"
+                                                    onclick="return confirm('Are you sure?')">
                                                 <i class="fas fa-ban"></i>
                                                 <span>{{ __('book.delete') }}</span>
                                             </button>

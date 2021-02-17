@@ -66,8 +66,8 @@ class BookService
             $validatedRequest['cover'] = $path;
         }
 
-        $validatedRequest['user_id'] = Auth::user()->id;
-        $validatedRequest['slug'] = Str::of($request->title)->slug('-');
+        $validatedRequest['user_id'] = auth()->id();
+        $validatedRequest['slug'] = Str::slug($request->title);
         return $validatedRequest;
     }
 }

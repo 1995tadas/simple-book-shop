@@ -50,12 +50,14 @@ class BookController extends Controller
             }
         }
 
+        $reviews = $book->reviews()->with('users')->latest()->simplePaginate(3);
+        $averageRatings = $ratings->IsEmpty() ? 0 : $ratings->avg('rate');
         $data = [
             'book' => $book,
             'authors' => $book->authors,
             'genres' => $book->genres,
-            'reviews' => $book->reviews()->with('users')->latest()->simplePaginate(3),
-            'averageRatings' => $ratings->IsEmpty() ? 0 : $ratings->avg('rate'),
+            'reviews' => $reviews,
+            'averageRatings' => $averageRatings,
             'ratersCount' => $ratings->count(),
             'userRating' => $userRating
         ];

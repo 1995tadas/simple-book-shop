@@ -14,20 +14,20 @@ class ReviewController extends Controller
     {
         $user = Auth::user();
 
-        $created = Review::create([
+        $review = Review::create([
             'content' => $request->content,
             'book_id' => $book->id,
             'user_id' => $user->id
         ]);
 
-        if (!$created) {
+        if (!$review) {
             return response('failed', 422);
         }
 
         return response()->json([
-            'created_at' => $created->created_at,
+            'created_at' => $review->created_at,
             'user' => $user->name,
-            'content' => $created->content
+            'content' => $review->content
         ], 201);
     }
 }
