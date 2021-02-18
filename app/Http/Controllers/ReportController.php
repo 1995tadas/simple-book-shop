@@ -12,7 +12,7 @@ class ReportController extends Controller
 {
     public function create(Book $book)
     {
-        return view('report.create', compact('book'));
+        return view('user.report.create', compact('book'));
     }
 
     public function send(ReportRequest $request): \Illuminate\Http\RedirectResponse

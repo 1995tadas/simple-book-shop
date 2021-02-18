@@ -39,13 +39,12 @@
                             @else
                                 <img class="hover:opacity-50" alt="{{$book->title . __('book.placeholder')}}"
                                      title="{{__('book.open') . ' ' . $book->title}}"
-                                     src="{{asset('images/book-placeholder.jpg')}}"
-                                >
+                                     src="{{asset('images/book-placeholder.jpg')}}">
                             @endif
                         </a>
                         <h2 class="text-sm">{{__('book.title')}}</h2>
                         <h3 class="text-xs pl-3 py-1 bg-gray-200 rounded">{{$book->title}}</h3>
-                        <h2 class="text-sm">{{__('book.author')}}</h2>
+                        <h2 class="text-sm">{{__('book.authors')}}</h2>
                         <ul class="text-xs pl-3 py-1 bg-gray-200 rounded">
                             @foreach($book->authors as $author)
                                 <li>{{$author->name}}</li>

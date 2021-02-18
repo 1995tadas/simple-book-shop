@@ -2,7 +2,7 @@
     <div class="p-3">
         <div>
             <h1 class="text-xl border-b-2 border-black">{{__('admin.genres').' '. __('admin.options')}}</h1>
-            <x-link class="pl-3 inline-block" href="{{route('genre.create')}}">{{__('admin.new')}}</x-link>
+            <x-link class="pl-3 inline-block" href="{{route('admin.genre.create')}}">{{__('admin.new')}}</x-link>
         </div>
         <div class="mt-4">
             <h1 class="text-xl border-b-2 border-black">{{__('admin.books').' '. __('admin.options')}}</h1>

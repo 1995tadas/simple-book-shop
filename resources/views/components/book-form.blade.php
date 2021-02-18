@@ -28,7 +28,7 @@
             <x-label for="authors-1" :value="__('book.authors').'*'"/>
             <input-repeater
                 id="authors" type="text" name="authors"
-                auto-complete-route="{{ route('author.autocomplete') }}"
+                auto-complete-route="{{ route('user.author.autocomplete') }}"
                 @if(old('authors'))
                 :values="{{ json_encode(old('authors'))}}"
                 @elseif(isset($fieldAuthors))

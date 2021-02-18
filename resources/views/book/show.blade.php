@@ -43,8 +43,8 @@
                             :average="{{ $averageRatings }}"
                             :raters-count="{{ $ratersCount }}"
                             @auth()
-                            store-route="{{ route('rating.store', ['book' => $book->slug]) }}"
-                            destroy-route="{{ route('rating.destroy', ['book' => $book->slug]) }}"
+                            store-route="{{ route('user.rating.store', ['book' => $book->slug]) }}"
+                            destroy-route="{{ route('user.rating.destroy', ['book' => $book->slug]) }}"
                             @endauth
                             @if($userRating)
                             :user-rating="{{ $userRating }}"
@@ -67,7 +67,7 @@
                                 @endif
                                 @if(auth()->user()->is_admin || auth()->id() === $book->user_id)
                                     <div class="text-red-400 hover:text-red-200">
-                                        <form action="{{route('book.destroy', ['book' => $book->slug])}}"
+                                        <form action="{{route('user.book.destroy', ['book' => $book->slug])}}"
                                               method="post">
                                             @csrf
                                             @method('delete')
@@ -79,11 +79,11 @@
                                         </form>
                                     </div>
                                     <x-link class="block mb-0 mr-0"
-                                            href="{{route('book.edit', ['book' => $book->slug])}}">
+                                            href="{{route('user.book.edit', ['book' => $book->slug])}}">
                                         <i class="far fa-edit"></i> {{ __('book.edit') }}
                                     </x-link>
                                 @endif
-                                <x-link href="{{route('report.create', ['book' => $book->slug])}}">
+                                <x-link href="{{route('user.report.create', ['book' => $book->slug])}}">
                                     <i class="fas fa-bug"></i> {{__('book.report')}}
                                 </x-link>
                             </div>
@@ -122,7 +122,7 @@
                     <div class="flex-grow">
                         <review
                             :translation="{{ json_encode(trans('review')) }}"
-                            store-route="{{ route('review.store', ['book' => $book->slug]) }}"
+                            store-route="{{ route('user.review.store', ['book' => $book->slug]) }}"
                             :page="{{ $reviews->currentPage() }}"
                         >
                         </review>

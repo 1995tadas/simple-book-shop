@@ -16,10 +16,10 @@ class AuthorOrAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->id === $request->route('book')->user_id || auth()->user()->is_admin) {
-            return $next($request);
+        if (!(auth()->user()->id === $request->route('book')->user_id || auth()->user()->is_admin)) {
+            abort(403);
         }
 
-        abort(403);
+        return $next($request);
     }
 }

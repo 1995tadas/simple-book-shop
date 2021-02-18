@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->except('show', 'index');
-        $this->middleware('author.admin')->only(['edit', 'update', 'destroy']);
-    }
-
     public function index(SearchRequest $request)
     {
         $books = Book::with(['authors', 'genres'])
@@ -67,7 +61,7 @@ class BookController extends Controller
     public function create()
     {
         $genres = Genre::all('id AS value', 'title AS option');
-        return view('book.create', compact('genres'));
+        return view('user.book.create', compact('genres'));
     }
 
     public function store(BookRequest $request): \Illuminate\Http\RedirectResponse
@@ -82,7 +76,7 @@ class BookController extends Controller
         $authors = $book->authors()->pluck('name');
         $genresOld = Arr::pluck($book->genres->toArray(), 'id');
         $genres = Genre::all('id AS value', 'title AS option');
-        return view('book.edit', compact('genres', 'genresOld', 'authors', 'book'));
+        return view('user.book.edit', compact('genres', 'genresOld', 'authors', 'book'));
     }
 
     public function update(BookRequest $request, Book $book): \Illuminate\Http\RedirectResponse
