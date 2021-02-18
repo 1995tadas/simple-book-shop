@@ -1,5 +1,5 @@
 @props(['admin' => false])
-<form class="pl-3 mt-2 block w-full sm:w-2/6" action="{{route('user.change_email')}}" method="post">
+<form class="pl-3 mt-2 block w-full sm:w-2/6" action="{{ route('user.change_email') }}" method="post">
     @if(session()->has("email_message"))
         <x-success>
             {{ session()->get("email_message") }}

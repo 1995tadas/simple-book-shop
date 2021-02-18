@@ -1,5 +1,5 @@
 @props(['admin' => false])
-<form class="pl-3 mt-1 block w-full sm:w-2/6" action="{{route('user.change_password')}}" method="post">
+<form class="pl-3 mt-1 block w-full sm:w-2/6" action="{{ route('user.change_password') }}" method="post">
     @if(session()->has("password_message"))
         <x-success>
             {{ session()->get("password_message") }}

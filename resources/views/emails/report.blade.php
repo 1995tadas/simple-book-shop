@@ -1,7 +1,7 @@
 @component('mail::message')
-# {{$data['content']}}
+# {{ $data['content'] }}
 
-{{$data['from']}}
+{{ $data['from'] }}
 
-[{{$data['bookTitle']}}]({{$data['bookLink']}})
+[{{ $data['bookTitle'] }}]({{ $data['bookLink'] }})
 @endcomponent

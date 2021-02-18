@@ -25,7 +25,7 @@
                      autofocus/>
         </div>
         <div class="mt-4">
-            <x-button>{{$buttonTitle}}</x-button>
+            <x-button>{{ $buttonTitle }}</x-button>
         </div>
     </form>
 </x-form-card>

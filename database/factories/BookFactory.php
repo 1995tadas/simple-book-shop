@@ -36,11 +36,12 @@ class BookFactory extends Factory
             'title' => $this->faker->word,
             'slug' => $this->faker->unique()->slug,
             'price' => $this->faker->randomFloat(2, 0, 5000),
-            'discount' => $this->faker->numberBetween(0, 100),
+            'discount' =>  $this->faker->boolean ? $this->faker->numberBetween(1, 100): 0,
             'description' => $this->faker->paragraph,
             'cover' => str_replace('storage/app/public/', '', $image),
             'approved' => $this->faker->boolean ? Carbon::now() : null,
             'user_id' => User::factory()->create()->id,
+            'created_at' => $this->faker->boolean ? now(): now()->subWeeks(40)
         ];
     }
 }

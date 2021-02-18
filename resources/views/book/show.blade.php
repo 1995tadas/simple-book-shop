@@ -8,32 +8,32 @@
         <div class="flex flex-col md:flex-row md:h-2/4">
             <div class="flex justify-center md:mr-5">
                 @if($book->cover)
-                    <img class="h-96" alt="{{$book->title. __('book.cover')}}"
+                    <img class="h-96" alt="{{ $book->title. __('book.cover') }}"
                          title="{{$book->title}}"
-                         src="{{asset('storage/' . $book->cover)}}">
+                         src="{{ asset('storage/' . $book->cover) }}">
                 @else
-                    <img class="h-96" alt="{{$book->title . __('book.placeholder')}}"
-                         title="{{$book->title}}"
-                         src="{{asset('images/book-placeholder.jpg')}}">
+                    <img class="h-96" alt="{{ $book->title . __('book.placeholder') }}"
+                         title="{{ $book->title }}"
+                         src="{{ asset('images/book-placeholder.jpg') }}">
                 @endif
             </div>
             <div class="flex-1 text-left">
-                <h1 class="text-3xl border-b-4 border-black">{{$book->title}}</h1>
+                <h1 class="text-3xl border-b-4 border-black">{{ $book->title }}</h1>
                 <div class="flex flex-col md:flex-row justify-between">
                     <div class="mt-2">
                         <div>
-                            <h2 class="text-xl inline">{{__('book.authors')}}</h2>
+                            <h2 class="text-xl inline">{{ __('book.authors') }}</h2>
                             <ul class="ml-2 inline font-bold leading-9">
                                 @foreach($authors as $author)
-                                    <li class="inline m-1 bg-blue-100 p-1 rounded">{{$author->name}}</li>
+                                    <li class="inline m-1 bg-blue-100 p-1 rounded">{{ $author->name }}</li>
                                 @endforeach
                             </ul>
                         </div>
                         <div class="mt-3">
-                            <h2 class="text-xl inline">{{__('book.genres')}}</h2>
+                            <h2 class="text-xl inline">{{ __('book.genres') }}</h2>
                             <ul class="ml-2 inline font-bold leading-9">
                                 @foreach($genres as $genre)
-                                    <li class="inline m-1 bg-blue-100 p-1 rounded">{{$genre->title}}</li>
+                                    <li class="inline m-1 bg-blue-100 p-1 rounded">{{ $genre->title }}</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -54,7 +54,7 @@
                             <div class="text-center">
                                 @if(!$book->approved && auth()->user()->is_admin)
                                     <div class="text-green-400 hover:text-green-200">
-                                        <form action="{{route('admin.approve_book', ['book' => $book->slug])}}"
+                                        <form action="{{ route('admin.approve_book', ['book' => $book->slug]) }}"
                                               method="post">
                                             @csrf
                                             @method('put')
@@ -67,7 +67,7 @@
                                 @endif
                                 @if(auth()->user()->is_admin || auth()->id() === $book->user_id)
                                     <div class="text-red-400 hover:text-red-200">
-                                        <form action="{{route('user.book.destroy', ['book' => $book->slug])}}"
+                                        <form action="{{ route('user.book.destroy', ['book' => $book->slug]) }}"
                                               method="post">
                                             @csrf
                                             @method('delete')
@@ -79,19 +79,19 @@
                                         </form>
                                     </div>
                                     <x-link class="block mb-0 mr-0"
-                                            href="{{route('user.book.edit', ['book' => $book->slug])}}">
+                                            href="{{ route('user.book.edit', ['book' => $book->slug]) }}">
                                         <i class="far fa-edit"></i> {{ __('book.edit') }}
                                     </x-link>
                                 @endif
-                                <x-link href="{{route('user.report.create', ['book' => $book->slug])}}">
-                                    <i class="fas fa-bug"></i> {{__('book.report')}}
+                                <x-link href="{{ route('user.report.create', ['book' => $book->slug]) }}">
+                                    <i class="fas fa-bug"></i> {{ __('book.report') }}
                                 </x-link>
                             </div>
                         @endauth
                     </div>
                 </div>
                 <p class="h-3/4 text-2xl md:text-left mt-1 md:mt-0">
-                    {{$book->description}}
+                    {{ $book->description }}
                 </p>
             </div>
         </div>
@@ -99,22 +99,22 @@
             <div class="flex justify-between py-3 w-100">
                 <div class="w-60 hidden md:block md:invisible"><span class="inline">|</span></div>
                 <div class="flex-grow">
-                    <h1 class="w-100 text-3xl border-b-4 border-black">{{__('book.reviews')}}</h1>
+                    <h1 class="w-100 text-3xl border-b-4 border-black">{{ __('book.reviews') }}</h1>
                 </div>
             </div>
             @foreach($reviews as $review)
                 <div class="flex justify-between flex-col md:flex-row py-3 w-100">
                     <div class="w-100 md:w-60 flex-left md:text-right">
                         <div class="text-xs m-0 md:m-1 mb-3">
-                            <span class="bg-blue-100 p-1 rounded">{{$review->created_at}}</span>
+                            <span class="bg-blue-100 p-1 rounded">{{ $review->created_at }}</span>
                         </div>
-                        <span class="m-0 md:m-1 bg-blue-100 p-1 rounded">{{$review->users->name}}</span>
+                        <span class="m-0 md:m-1 bg-blue-100 p-1 rounded">{{ $review->users->name }}</span>
                     </div>
-                    <span class="flex-1 mt-1 md:mt-0 break-all">{{$review->content}}</span>
+                    <span class="flex-1 mt-1 md:mt-0 break-all">{{ $review->content }}</span>
                 </div>
             @endforeach
             <div class="flex justify-start md:justify-end">
-                {{$reviews->links()}}
+                {{ $reviews->links() }}
             </div>
             @auth
                 <div class="flex justify-between py-3 w-100">
@@ -130,7 +130,7 @@
                 </div>
             @else
                 <div class="text-right mt-1">
-                    {{__('review.not_logged_first_part')}}
+                    {{ __('review.not_logged_first_part') }}
                     <x-link href="{{route('login')}}">
                         {{ __('review.not_logged_second_part') }}
                     </x-link>
