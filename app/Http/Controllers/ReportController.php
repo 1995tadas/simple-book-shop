@@ -15,10 +15,10 @@ class ReportController extends Controller
         return view('user.report.create', compact('book'));
     }
 
-    public function send(ReportRequest $request): \Illuminate\Http\RedirectResponse
+    public function send(ReportRequest $request, Book $book): \Illuminate\Http\RedirectResponse
     {
-        $book = Book::findOrFail($request->book_id);
-        $bookLink = route('book.show', ['book' => $book->slug]);
+        $bookLink = route('book.show', $book);
+
         $data = [
             'content' => $request->content,
             'bookLink' => $bookLink,
@@ -27,6 +27,7 @@ class ReportController extends Controller
         ];
 
         Mail::send(new Report($data));
+
         return redirect($bookLink)->with('success', __('report.reported'));
     }
 }

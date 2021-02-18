@@ -39,7 +39,7 @@ class BookFactory extends Factory
             'discount' =>  $this->faker->boolean ? $this->faker->numberBetween(1, 100): 0,
             'description' => $this->faker->paragraph,
             'cover' => str_replace('storage/app/public/', '', $image),
-            'approved' => $this->faker->boolean ? Carbon::now() : null,
+            'approved_at' => $this->faker->boolean ? Carbon::now() : null,
             'user_id' => User::factory()->create()->id,
             'created_at' => $this->faker->boolean ? now(): now()->subWeeks(40)
         ];

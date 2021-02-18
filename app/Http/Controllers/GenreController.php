@@ -9,11 +9,14 @@ class GenreController extends Controller
 {
     public function store(GenreRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $created = Genre::create($request->validated());
-        if($created){
-            return redirect()->route('admin.genre.create')->with('success', __('genre.success'));
+        try {
+            Genre::create($request->validated());
+        } catch (\Exception $e) {
+            return redirect()->route('admin.genre.create')
+                ->with('error', __('genre.error'));
         }
 
-        abort(404);
+        return redirect()->route('admin.genre.create')
+            ->with('success', __('genre.success'));
     }
 }

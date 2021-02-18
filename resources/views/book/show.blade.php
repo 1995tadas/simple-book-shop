@@ -5,6 +5,11 @@
                 {{ session()->get('success') }}
             </x-success>
         @endif
+        @if(session()->has('error'))
+            <x-error class="mb-5">
+                {{ session()->get('error') }}
+            </x-error>
+        @endif
         <div class="flex flex-col md:flex-row md:h-2/4">
             <div class="flex justify-center md:mr-5">
                 @if($book->cover)
@@ -40,21 +45,21 @@
                     </div>
                     <div>
                         <book-rating
-                            :average="{{ $averageRatings }}"
-                            :raters-count="{{ $ratersCount }}"
+                                :average="{{ $averageRatings }}"
+                                :raters-count="{{ $ratersCount }}"
                             @auth()
-                            store-route="{{ route('user.rating.store', ['book' => $book->slug]) }}"
-                            destroy-route="{{ route('user.rating.destroy', ['book' => $book->slug]) }}"
+                                store-route="{{ route('user.rating.store', $book) }}"
+                                destroy-route="{{ route('user.rating.destroy', $book) }}"
                             @endauth
                             @if($userRating)
-                            :user-rating="{{ $userRating }}"
+                                :user-rating="{{ $userRating }}"
                             @endif>
                         </book-rating>
                         @auth
                             <div class="text-center">
-                                @if(!$book->approved && auth()->user()->is_admin)
+                                @if($book->approved_at === null && auth()->user()->is_admin)
                                     <div class="text-green-400 hover:text-green-200">
-                                        <form action="{{ route('admin.approve_book', ['book' => $book->slug]) }}"
+                                        <form action="{{ route('admin.approve_book', $book) }}"
                                               method="post">
                                             @csrf
                                             @method('put')
@@ -67,7 +72,7 @@
                                 @endif
                                 @if(auth()->user()->is_admin || auth()->id() === $book->user_id)
                                     <div class="text-red-400 hover:text-red-200">
-                                        <form action="{{ route('user.book.destroy', ['book' => $book->slug]) }}"
+                                        <form action="{{ route('user.book.destroy', $book) }}"
                                               method="post">
                                             @csrf
                                             @method('delete')
@@ -79,11 +84,11 @@
                                         </form>
                                     </div>
                                     <x-link class="block mb-0 mr-0"
-                                            href="{{ route('user.book.edit', ['book' => $book->slug]) }}">
+                                            href="{{ route('user.book.edit', $book) }}">
                                         <i class="far fa-edit"></i> {{ __('book.edit') }}
                                     </x-link>
                                 @endif
-                                <x-link href="{{ route('user.report.create', ['book' => $book->slug]) }}">
+                                <x-link href="{{ route('user.report.create', $book) }}">
                                     <i class="fas fa-bug"></i> {{ __('book.report') }}
                                 </x-link>
                             </div>
@@ -122,9 +127,8 @@
                     <div class="flex-grow">
                         <review
                             :translation="{{ json_encode(trans('review')) }}"
-                            store-route="{{ route('user.review.store', ['book' => $book->slug]) }}"
-                            :page="{{ $reviews->currentPage() }}"
-                        >
+                            store-route="{{ route('user.review.store', $book) }}"
+                            :page="{{ $reviews->currentPage() }}">
                         </review>
                     </div>
                 </div>

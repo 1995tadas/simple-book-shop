@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\RatingController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,7 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Reports
         Route::group(['as' => 'report.', 'prefix' => 'report'], function () {
             Route::get('/create/{book}', [ReportController::class, 'create'])->name('create');
-            Route::post('/store', [ReportController::class, 'send'])->name('send');
+            Route::post('/store/{book}', [ReportController::class, 'send'])->name('send');
         });
 
         // Authors

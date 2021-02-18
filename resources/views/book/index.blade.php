@@ -5,11 +5,16 @@
                 {{ session()->get('success') }}
             </x-success>
         @endif
+        @if(session()->has('error'))
+            <x-error class="mb-2">
+                {{ session()->get('error') }}
+            </x-error>
+        @endif
         <h1 class="text-3xl mb-3 capitalize bold">
             @if(isset($title))
                 {{$title}}
-            @elseif(isset($numberOfBooks))
-                {{ __('book.found').' '.$numberOfBooks }}
+            @elseif(request()->has('search'))
+                {{ $books->total() }}
             @endif
             {{ __('book.books') }}
         </h1>
@@ -19,12 +24,15 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 box-border">
                 @foreach($books as $book)
                     <div class="text-left bg-white p-4">
-                        <a href="{{ route('book.show', ['book' => $book->slug]) }}" class="relative block">
-                            @if((\Carbon\Carbon::parse($book->created_at))->gt(\Carbon\Carbon::now()->subWeek()))
+                        <a href="{{ route('book.show', $book) }}" class="relative block">
+                            {{--  New book  --}}
+                            @if(($book->isNew))
                                 <span class="absolute top-2 right-2 text-red-600 rounded font-bold bg-white px-1">
                                     {{ __('book.recent') }}
                                 </span>
                             @endif
+
+                            {{--  Discount  --}}
                             @if($book->discount)
                                 <div class="absolute inset-x-0 bottom-0 h-16 text-center">
                                     <span class="text-red-600 rounded text-xl font-bold bg-white px-1">
@@ -32,6 +40,8 @@
                                     </span>
                                 </div>
                             @endif
+
+                            {{--  Cover  --}}
                             @if($book->cover)
                                 <img class="hover:opacity-50" alt="{{ $book->title . __('book.cover') }}"
                                      title="{{ __('book.open') . ' ' . $book->title }}"

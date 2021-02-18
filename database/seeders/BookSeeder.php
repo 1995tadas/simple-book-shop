@@ -32,7 +32,7 @@ class BookSeeder extends Seeder
                 ->has(Genre::factory()->count(rand(1, 6)))
                 ->has(Review::factory()->count(rand(0, 10)))
                 ->has(Rating::factory()->count(rand(0, 10)))
-                ->count(rand(5, 10)))
+                ->count(10))
             ->count(5)->create();
     }
 

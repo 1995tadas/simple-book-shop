@@ -1,4 +1,3 @@
-s
 <template>
     <div class="text-center my-2">
         <ul class="whitespace-nowrap">

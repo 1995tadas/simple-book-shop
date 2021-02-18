@@ -1,9 +1,14 @@
 @props(['admin' => false])
 <form class="pl-3 mt-1 block w-full sm:w-2/6" action="{{ route('user.change_password') }}" method="post">
-    @if(session()->has("password_message"))
+    @if(session()->has('password_message'))
         <x-success>
-            {{ session()->get("password_message") }}
+            {{ session()->get('password_message') }}
         </x-success>
+    @endif
+    @if(session()->has('password_error'))
+        <x-error>
+            {{ session()->get('password_error') }}
+        </x-error>
     @endif
     <x-auth-validation-errors class="mb-4" :errors="$errors->change_password"/>
     @csrf
@@ -11,7 +16,7 @@
 
     <div class="mt-1">
         @if(Auth()->user()->is_admin && $admin)
-            <x-label for="email" :value="__('admin.user').' '.__('user.email').'*'" />
+            <x-label for="email" :value="__('admin.user').' '.__('user.email').'*'"/>
             <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                      required>
             </x-input>

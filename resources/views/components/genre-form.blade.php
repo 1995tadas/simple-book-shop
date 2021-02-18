@@ -12,6 +12,11 @@
             {{ session()->get('success') }}
         </x-success>
     @endif
+    @if(session()->has('error'))
+        <x-error class="mb-3">
+            {{ session()->get('error') }}
+        </x-error>
+    @endif
     <form method="post" action="{{ $action }}">
     @csrf
     @if(strtolower($method) !== "post")

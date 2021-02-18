@@ -18,30 +18,32 @@ class BookController extends Controller
         $books = Book::with(['authors', 'genres'])
             ->when($request->search, function ($query) use ($request) {
                 $search = $request->search;
-                Cookie::queue('search', $search);
-                $query->where('title', 'like', '%' . $search . '%')
-                    ->OrwhereHas('authors', function ($query) use ($search) {
-                        return $query->where('name', 'like', '%' . $search . '%');
-                    });
-            })->approved();
-        $data = [];
-        if ($request->search) {
-            $data['numberOfBooks'] = $books->count();
-        }
 
-        $data['books'] = $books->latest()->simplePaginate();
-        return view('book.index', $data);
+                Cookie::queue('search', $search);
+
+                $query
+                    ->where('title', 'like', '%' . $search . '%')
+                    ->OrwhereHas('authors', function ($query) use ($search) {
+                        return $query
+                            ->where('name', 'like', '%' . $search . '%');
+                    });
+            })
+            ->approved()
+            ->latest()
+            ->paginate();
+
+        return view('book.index', compact('books'));
     }
 
     public function show(Book $book)
     {
+        $book->load('ratings');
         $ratings = $book->ratings;
         $userRating = null;
         if (auth()->check() && $ratings->isNotEmpty()) {
-            $rated = $ratings->where('user_id', auth()->id())->first();
-            if ($rated) {
-                $userRating = $rated->rate;
-            }
+            $userRating = optional(
+                $ratings->where('user_id', auth()->id())->first())
+                ->rate;
         }
 
         $reviews = $book->reviews()->with('users')->latest()->simplePaginate(3);
@@ -61,13 +63,14 @@ class BookController extends Controller
     public function create()
     {
         $genres = Genre::all('id AS value', 'title AS option');
+
         return view('user.book.create', compact('genres'));
     }
 
-    public function store(BookRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(BookRequest $request, BookService $bookService): \Illuminate\Http\RedirectResponse
     {
-        $bookService = new BookService();
-        $bookService->storeOrUpdate($request);
+        $bookService->updateOrCreate($request);
+
         return redirect()->route('book.index')->with('success', __('book.wait_for_admin'));
     }
 
@@ -79,32 +82,28 @@ class BookController extends Controller
         return view('user.book.edit', compact('genres', 'genresOld', 'authors', 'book'));
     }
 
-    public function update(BookRequest $request, Book $book): \Illuminate\Http\RedirectResponse
+    public function update(BookRequest $request, Book $book, BookService $bookService): \Illuminate\Http\RedirectResponse
     {
-        $bookService = new BookService();
-        $bookService->storeOrUpdate($request, $book);
+        $bookService->updateOrCreate($request, $book);
+
         return redirect()->route('book.index')->with('success', __('book.updated'));
     }
 
     public function destroy(Book $book): \Illuminate\Http\RedirectResponse
     {
+        if (auth()->user()->is_admin) {
+            $redirect = redirect()->route('admin.not_approved_books');
+        } else {
+            $redirect = redirect()->route('book.index');
+        }
+
         try {
             Storage::delete($book->cover);
-            $deleted = $book->delete();
+            $book->delete();
         } catch (\Exception $e) {
-            throw new \ErrorException('Something went wrong while deleting book');
+            return $redirect->with('error', __('book.delete_error'));
         }
 
-        if ($deleted) {
-            if (auth()->user()->is_admin) {
-                $redirect = redirect()->route('admin.not_approved_books');
-            } else {
-                $redirect = redirect()->route('book.index');
-            }
-
-            return $redirect->with('success', __('book.delete_success'));
-        }
-
-        abort(422);
+        return $redirect->with('success', __('book.delete_success'));
     }
 }

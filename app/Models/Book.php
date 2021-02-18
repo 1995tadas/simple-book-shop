@@ -9,7 +9,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'price', 'discount', 'description', 'cover', 'approved', 'user_id'];
+    protected $fillable = ['title', 'slug', 'price', 'discount', 'description', 'cover', 'approved_at', 'user_id'];
 
     protected $perPage = 25;
 
@@ -27,6 +27,7 @@ class Book extends Model
     {
         $this->attributes['description'] = ucfirst($value);
     }
+
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Author::class);
@@ -54,11 +55,16 @@ class Book extends Model
 
     public function scopeApproved($query): \Illuminate\Database\Eloquent\Builder
     {
-        return $query->where('approved', '!=', null);
+        return $query->where('approved_at', '!=', null);
     }
 
     public function scopeNotApproved($query): \Illuminate\Database\Eloquent\Builder
     {
-        return $query->where('approved', null);
+        return $query->where('approved_at', null);
+    }
+
+    public function getIsNewAttribute(): bool
+    {
+        return now()->subWeek() < $this->created_at;
     }
 }

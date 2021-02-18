@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-form-card :title="__('report.new') . ' - '. $book->title">
         <form class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white overflow-hidden sm:rounded-lg"
-              action="{{ route('user.report.send') }}" method="post">
+              action="{{ route('user.report.send', $book) }}" method="post">
             @csrf
             <x-auth-validation-errors class="mb-4" :errors="$errors"/>
             <div>

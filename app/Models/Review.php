@@ -16,6 +16,7 @@ class Review extends Model
     {
         $this->attributes['content'] = ucfirst($value);
     }
+
     public function getCreatedAtAttribute($value): string
     {
         return Carbon::parse($value)->toDateTimeString();

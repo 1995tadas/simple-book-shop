@@ -22,6 +22,7 @@ return [
     'delete' => 'delete book',
     'edit' => 'edit book',
     'delete_success' => 'Book was deleted successfully',
+    'delete_error' => 'Book deletion failed',
     'wait_for_admin' => 'Book was saved.. it will be published after administrators approve',
     'updated' => 'Book was updated',
     'report' => 'Report',

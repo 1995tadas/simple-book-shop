@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -26,14 +25,16 @@ class AdminController extends Controller
 
     public function approveBook(Book $book): \Illuminate\Http\RedirectResponse
     {
-        if ($book->approved === null) {
-            $updated = $book->update(['approved' => Carbon::now()]);
-            if ($updated) {
-                return redirect()->route('admin.not_approved_books')
-                    ->with('success', __('admin.approved_success'));
-            }
+        try {
+            $book->update(['approved_at' => now()]);
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.not_approved_books')
+                ->with('error', __('admin.approved_error'));
         }
 
-        abort(404);
+        return redirect()
+            ->route('admin.not_approved_books')
+            ->with('success', __('admin.approved_success'));
     }
 }
