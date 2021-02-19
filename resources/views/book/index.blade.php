@@ -62,11 +62,7 @@
                         </ul>
                         <h2 class="text-sm">{{ __('book.price') }}</h2>
                         <h3 class="text-xs pl-3 py-1 bg-gray-200 rounded">
-                            @if($book->price == 0)
-                                {{ __('book.free') }}
-                            @else
-                                {{ number_format($book->price, 2).' €' }}
-                            @endif
+                        @currency($book->price)
                         </h3>
                     </div>
                 @endforeach

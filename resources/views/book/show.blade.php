@@ -42,6 +42,12 @@
                                 @endforeach
                             </ul>
                         </div>
+                        <div class="mt-3">
+                            <h2 class="text-xl inline">{{ __('book.price') }}</h2>
+                            <span class="m-1 bg-blue-100 p-1 rounded">
+                                @currency($book->price)
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <book-rating
