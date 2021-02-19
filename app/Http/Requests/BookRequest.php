@@ -27,7 +27,7 @@ class BookRequest extends FormRequest
             'title' => 'required|string|max:60',
             'authors' => 'required|array|min:1',
             'authors.*' => 'nullable|string|between:2,60',
-            'price' => 'numeric|distinct|min:0',
+            'price' => 'numeric|distinct|regex:/^\d+(\.\d{1,2})?$/|min:0',
             'discount' => 'integer|distinct|between:0,100',
             'genres' => 'required|array|min:1',
             'genres.*' => 'integer|min:1|exists:genres,id',

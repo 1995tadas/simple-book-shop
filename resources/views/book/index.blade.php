@@ -65,7 +65,7 @@
                             @if($book->price == 0)
                                 {{ __('book.free') }}
                             @else
-                                {{ $book->price.' €' }}
+                                {{ number_format($book->price, 2).' €' }}
                             @endif
                         </h3>
                     </div>

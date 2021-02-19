@@ -23,6 +23,16 @@ class Book extends Model
         $this->attributes['title'] = ucfirst($value);
     }
 
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = $value * 100;
+    }
+
+    public function getPriceAttribute()
+    {
+        return $this->attributes['price'] / 100;
+    }
+
     public function setDescriptionAttribute($value)
     {
         $this->attributes['description'] = ucfirst($value);

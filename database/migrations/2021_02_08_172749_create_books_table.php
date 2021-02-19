@@ -17,7 +17,7 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->float('price')->nullable();
+            $table->integer('price')->nullable();
             $table->integer('discount')->nullable();
             $table->text('description');
             $table->string('cover')->nullable();
