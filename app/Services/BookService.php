@@ -47,7 +47,11 @@ class BookService
         }
 
         $validatedRequest['user_id'] = auth()->id();
-        $validatedRequest['slug'] = Str::slug($request->title);
+
+        $stringService = new StringService();
+        $slug = $stringService->uniqueSlug(new Book(), $request->title);
+
+        $validatedRequest['slug'] = $slug;
         return $validatedRequest;
     }
 }

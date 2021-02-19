@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Books
         Route::resource('book', BookController::class)->only(['create', 'store']);
         Route::resource('book', BookController::class)->only(['edit', 'update', 'destroy'])
-            ->middleware('author.admin');
+            ->middleware('author.admin')->parameters(['book' => 'book:id']);
 
         // Reviews
         Route::post('review/{book}', [ReviewController::class, 'store'])->name('review.store');
