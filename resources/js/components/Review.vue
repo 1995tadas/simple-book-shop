@@ -34,6 +34,10 @@ export default {
             type: String,
             required: true
         },
+        reviewsPerPage: {
+            type: Number,
+            required: true
+        },
         page: {
             type: Number,
             required: true
@@ -94,8 +98,8 @@ export default {
         addReviewToDom(review, userName, createdAt) {
             let reviewsEl = document.getElementById('reviews');
             if (typeof (reviewsEl) !== 'undefined' && reviewsEl !== null && this.page === 1) {
-                if (reviewsEl.children.length >= 6) {
-                    reviewsEl.removeChild(reviewsEl.children[3]);
+                if (reviewsEl.children.length >= this.reviewsPerPage + 3) {
+                    reviewsEl.removeChild(reviewsEl.children[this.reviewsPerPage]);
                 }
 
                 const contentText = document.createTextNode(review);

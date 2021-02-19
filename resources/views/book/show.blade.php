@@ -128,6 +128,7 @@
                         <review
                             :translation="{{ json_encode(trans('review')) }}"
                             store-route="{{ route('user.review.store', $book) }}"
+                            :reviews-per-page="{{ $reviews->perPage() }}"
                             :page="{{ $reviews->currentPage() }}">
                         </review>
                     </div>
