@@ -15,7 +15,7 @@
         </div>
         <div class="mt-4">
             <h1 class="text-xl border-b-2 border-black">{{ __('admin.user').' '. __('admin.options') }}</h1>
-            <x-change-password :admin="true"></x-change-password>
+            <x-change-password :admin-panel="true"></x-change-password>
         </div>
     </div>
 </x-app-layout>

@@ -43,7 +43,7 @@
             <x-input id="price" class="block mt-1 w-full" type="number" step="0.01" name="price"
                      :value="old('price') ? old('price') : (isset($fieldPrice) ? $fieldPrice: 0)"/>
         </div>
-        @if(auth()->user()->is_admin)
+        @admin
             <div class="mt-4">
                 <x-label for="discount">
                     {{ __('book.discount') }} (%)
@@ -52,7 +52,7 @@
                          :value="old('discount') ? old('discount') : (isset($fieldDiscount) ? $fieldDiscount: 0)"
                          min="0" max="100"/>
             </div>
-        @endif
+        @endadmin
         <div class="mt-4">
             <x-label for="genres-1" :value="__('book.genres').'*'"/>
             <select-repeater

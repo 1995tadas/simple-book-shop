@@ -29,11 +29,11 @@
                 </button>
             </a>
         @else
-            @if(auth()->user()->is_admin)
+            @admin
                 <a class="mt-1 md:mt-0" href="{{ route('admin.panel') }}">
                     <x-header-button class="bg-white text-black ml-2">{{ __('additional.admin_panel') }}</x-header-button>
                 </a>
-            @endif
+            @endadmin
             <a class="mt-1 md:mt-0" href="{{ route('user.panel') }}">
                 <x-header-button class="bg-white text-black ml-2">{{ __('additional.user_panel') }}</x-header-button>
             </a>

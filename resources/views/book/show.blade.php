@@ -58,7 +58,7 @@
                         </book-rating>
                         @auth
                             <div class="text-center">
-                                @if($book->approved_at === null && auth()->user()->is_admin)
+                                @if(auth()->user()->is_admin && $book->approved_at === null)
                                     <div class="text-green-400 hover:text-green-200">
                                         <form action="{{ route('admin.approve_book', $book) }}"
                                               method="post">

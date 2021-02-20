@@ -26,9 +26,18 @@ class BladeServiceProvider extends ServiceProvider
     {
         Blade::directive('currency', function ($currency) {
             return
-            "<?php
+                "<?php
                 echo number_format($currency, 2) . ' €'
             ?>";
         });
+
+        Blade::directive('admin', function () {
+            return "<?php if(auth()->check() && auth()->user()->is_admin): ?>";
+        });
+
+        Blade::directive('endadmin', function () {
+            return "<?php endif; ?>";
+        });
+
     }
 }
