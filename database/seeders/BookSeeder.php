@@ -20,12 +20,6 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
-        $exists = Storage::exists('/covers');
-        if ($exists) {
-            $images = Storage::allFiles('/covers');
-            Storage::delete($images);
-        }
-
         User::factory()->has(
             Book::factory()
                 ->has(Author::factory()->count(rand(1, 3)))
