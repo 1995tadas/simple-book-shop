@@ -12,9 +12,10 @@
         @endif
         <div class="flex flex-col md:flex-row md:h-2/4">
             <div class="flex justify-center md:mr-5">
-                <img class="h-96" alt="{{ $book->title. __('book.cover') }}"
-                     title="{{$book->title}}"
-                     src="{{ asset(asset($book->cover)) }}">
+                <x-book-cover
+                    :cover="$book->cover" :title="$book->title"
+                    :new="$book->isNew" :discount="$book->discount">
+                </x-book-cover>
             </div>
             <div class="flex-1 text-left">
                 <h1 class="text-3xl border-b-4 border-black">{{ $book->title }}</h1>

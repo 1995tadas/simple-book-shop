@@ -13,7 +13,6 @@ return [
     'save' => 'Save',
     'new' => 'Add New Book',
     'empty' => 'There is no books',
-    'open' => 'Open',
     'free' => 'Free',
     'recent' => 'New',
     'reviews' => 'Reviews',

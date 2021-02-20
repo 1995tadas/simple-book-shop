@@ -24,27 +24,12 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 box-border">
                 @foreach($books as $book)
                     <div class="text-left bg-white p-4">
-                        <a href="{{ route('book.show', $book) }}" class="relative block">
-                            {{--  New book  --}}
-                            @if(($book->isNew))
-                                <span class="absolute top-2 right-2 text-red-600 rounded font-bold bg-white px-1">
-                                    {{ __('book.recent') }}
-                                </span>
-                            @endif
-
-                            {{--  Discount  --}}
-                            @if($book->discount)
-                                <div class="absolute inset-x-0 bottom-0 h-16 text-center">
-                                    <span class="text-red-600 rounded text-xl font-bold bg-white px-1">
-                                        <i class="fas fa-tags"></i> {{ $book->discount.' %' }}
-                                    </span>
-                                </div>
-                            @endif
-
-                            {{--  Cover  --}}
-                            <img class="hover:opacity-50" alt="{{ $book->title . __('book.cover') }}"
-                                 title="{{ __('book.open') . ' ' . $book->title }}"
-                                 src="{{ asset($book->cover) }}">
+                        <a href="{{ route('book.show', $book) }}">
+                            <x-book-cover
+                                :cover="$book->cover" :title="$book->title"
+                                :new="$book->isNew" :discount="$book->discount"
+                                :link="true">
+                            </x-book-cover>
                         </a>
                         <h2 class="text-sm">{{ __('book.title') }}</h2>
                         <h3 class="text-xs pl-3 py-1 bg-gray-200 rounded">{{ $book->title }}</h3>
