@@ -42,15 +42,9 @@
                             @endif
 
                             {{--  Cover  --}}
-                            @if($book->cover)
-                                <img class="hover:opacity-50" alt="{{ $book->title . __('book.cover') }}"
-                                     title="{{ __('book.open') . ' ' . $book->title }}"
-                                     src="{{ asset('storage/' . $book->cover) }}">
-                            @else
-                                <img class="hover:opacity-50" alt="{{ $book->title . __('book.placeholder') }}"
-                                     title="{{ __('book.open') . ' ' . $book->title }}"
-                                     src="{{ asset('images/book-placeholder.jpg') }}">
-                            @endif
+                            <img class="hover:opacity-50" alt="{{ $book->title . __('book.cover') }}"
+                                 title="{{ __('book.open') . ' ' . $book->title }}"
+                                 src="{{ asset($book->cover) }}">
                         </a>
                         <h2 class="text-sm">{{ __('book.title') }}</h2>
                         <h3 class="text-xs pl-3 py-1 bg-gray-200 rounded">{{ $book->title }}</h3>
@@ -62,7 +56,7 @@
                         </ul>
                         <h2 class="text-sm">{{ __('book.price') }}</h2>
                         <h3 class="text-xs pl-3 py-1 bg-gray-200 rounded">
-                        @currency($book->price)
+                            @currency($book->price)
                         </h3>
                     </div>
                 @endforeach

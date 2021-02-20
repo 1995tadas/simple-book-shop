@@ -38,6 +38,17 @@ class Book extends Model
         $this->attributes['description'] = ucfirst($value);
     }
 
+    public function getCoverAttribute()
+    {
+        $cover = $this->attributes['cover'];
+
+        if (!$cover) {
+            return 'images/book-placeholder.jpg';
+        } else {
+            return 'storage/' . $cover;
+        }
+    }
+
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Author::class);

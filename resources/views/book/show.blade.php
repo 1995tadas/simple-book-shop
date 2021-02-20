@@ -12,15 +12,9 @@
         @endif
         <div class="flex flex-col md:flex-row md:h-2/4">
             <div class="flex justify-center md:mr-5">
-                @if($book->cover)
-                    <img class="h-96" alt="{{ $book->title. __('book.cover') }}"
-                         title="{{$book->title}}"
-                         src="{{ asset('storage/' . $book->cover) }}">
-                @else
-                    <img class="h-96" alt="{{ $book->title . __('book.placeholder') }}"
-                         title="{{ $book->title }}"
-                         src="{{ asset('images/book-placeholder.jpg') }}">
-                @endif
+                <img class="h-96" alt="{{ $book->title. __('book.cover') }}"
+                     title="{{$book->title}}"
+                     src="{{ asset(asset($book->cover)) }}">
             </div>
             <div class="flex-1 text-left">
                 <h1 class="text-3xl border-b-4 border-black">{{ $book->title }}</h1>
@@ -51,14 +45,14 @@
                     </div>
                     <div>
                         <book-rating
-                                :average="{{ $averageRatings }}"
-                                :raters-count="{{ $ratersCount }}"
+                            :average="{{ $averageRatings }}"
+                            :raters-count="{{ $ratersCount }}"
                             @auth()
-                                store-route="{{ route('user.rating.store', $book) }}"
-                                destroy-route="{{ route('user.rating.destroy', $book) }}"
+                            store-route="{{ route('user.rating.store', $book) }}"
+                            destroy-route="{{ route('user.rating.destroy', $book) }}"
                             @endauth
                             @if($userRating)
-                                :user-rating="{{ $userRating }}"
+                            :user-rating="{{ $userRating }}"
                             @endif>
                         </book-rating>
                         @auth
