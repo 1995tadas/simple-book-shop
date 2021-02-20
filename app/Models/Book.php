@@ -38,7 +38,7 @@ class Book extends Model
         $this->attributes['description'] = ucfirst($value);
     }
 
-    public function getCoverAttribute()
+    public function getCoverAttribute(): string
     {
         $cover = $this->attributes['cover'];
 

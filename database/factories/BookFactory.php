@@ -24,13 +24,8 @@ class BookFactory extends Factory
      */
     public function definition()
     {
-        $directory = '/covers';
-        $exists = Storage::exists($directory);
-        if (!$exists) {
-            Storage::makeDirectory($directory);
-        }
 
-        $image = $this->faker->image('storage/app/public' . $directory, 600, 1000, 'books');
+        $image = $this->faker->image('storage/app/public' . '/covers', 600, 1000, 'books');
 
         return [
             'title' => $this->faker->word,
@@ -40,7 +35,6 @@ class BookFactory extends Factory
             'description' => $this->faker->paragraph,
             'cover' => str_replace('storage/app/public/', '', $image),
             'approved_at' => $this->faker->boolean ? Carbon::now() : null,
-            'user_id' => User::factory()->create()->id,
             'created_at' => $this->faker->boolean ? now(): now()->subWeeks(40)
         ];
     }

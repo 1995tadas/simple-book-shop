@@ -20,14 +20,39 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->has(
-            Book::factory()
-                ->has(Author::factory()->count(rand(1, 3)))
-                ->has(Genre::factory()->count(rand(1, 6)))
-                ->has(Review::factory()->count(rand(0, 10)))
-                ->has(Rating::factory()->count(rand(0, 10)))
-                ->count(10))
-            ->count(5)->create();
+        $directory = '/covers';
+        $exists = Storage::exists($directory);
+        if (!$exists) {
+            Storage::makeDirectory($directory);
+        }
+
+        $users = User::all();
+        $genres = Genre::all();
+        $authors = Author::all();
+        Book::factory(['user_id' => $users->random()->first()->id])
+            ->count(round(75, 125))->create()->each(
+            function ($book) use ($users, $genres, $authors) {
+                $randomGenres = $genres->random(rand(0, 6));
+                $book->genres()->saveMany($randomGenres);
+
+                $authorsIds = $authors->random(rand(1, 3))->pluck('id');
+                $book->authors()->attach($authorsIds);
+
+                $randomUsers = $users->random(rand(10, 25));
+                for ($i = 0; $i < $randomUsers->count(); $i++) {
+                    Rating::factory([
+                        'book_id' => $book->id,
+                        'user_id' => $randomUsers->skip($i)->first()->id
+                    ])->create();
+                }
+                for ($i = 0; $i < $randomUsers->count(); $i++) {
+                    Review::factory([
+                        'book_id' => $book->id,
+                        'user_id' => $randomUsers->skip($i)->first()->id
+                    ])->create();
+                }
+            }
+        );
     }
 
 }

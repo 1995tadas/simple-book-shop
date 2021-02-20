@@ -24,7 +24,6 @@ class RatingFactory extends Factory
     {
         return [
             'rate' => $this->faker->numberBetween(1, 5),
-            'user_id' => User::factory()->create()->id,
         ];
     }
 }
