@@ -56,7 +56,7 @@
                         </ul>
                         <h2 class="text-sm">{{ __('book.price') }}</h2>
                         <h3 class="text-xs pl-3 py-1 bg-gray-200 rounded">
-                            @currency($book->price)
+                            <x-book-price :price="$book->price" :discount="$book->discount"></x-book-price>
                         </h3>
                     </div>
                 @endforeach

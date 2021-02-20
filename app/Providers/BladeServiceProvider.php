@@ -26,10 +26,8 @@ class BladeServiceProvider extends ServiceProvider
     {
         Blade::directive('currency', function ($currency) {
             return
-                "<?php
-            echo ($currency != 0)
-            ? number_format($currency, 2) . ' €'
-            : __('book.free')
+            "<?php
+                echo number_format($currency, 2) . ' €'
             ?>";
         });
     }

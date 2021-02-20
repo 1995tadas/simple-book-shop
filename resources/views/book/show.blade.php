@@ -39,7 +39,7 @@
                         <div class="mt-3">
                             <h2 class="text-xl inline">{{ __('book.price') }}</h2>
                             <span class="m-1 bg-blue-100 p-1 rounded">
-                                @currency($book->price)
+                                <x-book-price :price="$book->price" :discount="$book->discount"></x-book-price>
                             </span>
                         </div>
                     </div>
