@@ -32,7 +32,7 @@ class BookSeeder extends Seeder
         Book::factory(['user_id' => $users->random()->first()->id])
             ->count(round(75, 125))->create()->each(
             function ($book) use ($users, $genres, $authors) {
-                $randomGenres = $genres->random(rand(0, 6));
+                $randomGenres = $genres->random(rand(1, 6));
                 $book->genres()->saveMany($randomGenres);
 
                 $authorsIds = $authors->random(rand(1, 3))->pluck('id');
