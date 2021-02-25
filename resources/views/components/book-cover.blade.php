@@ -21,7 +21,7 @@
     <img
         alt="{{ $title . __('book.cover') }}"
         title="{{ $title }}"
-        src="{{ asset($cover) }}"
+        src="{{ $cover }}"
         @if($link)
             class="hover:opacity-50"
         @else

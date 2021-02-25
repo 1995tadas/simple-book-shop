@@ -33,7 +33,7 @@ class BookResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'email' => asset($this->cover),
+            'cover' => $this->cover,
             'price' => $this->price,
             'description' => $this->when(self::$mode === 'book', $this->description),
             'authors' => $this->authors->implode('name', ', '),

@@ -10,7 +10,7 @@
             </li>
         </ul>
         <span class="block bg-gray-200 text-3xl text-blue-900">
-            {{ round(newAverage !== null ? newAverage : average) }}<span class="text-sm">
+            {{ round(newAverage !== null ? newAverage : averageRating) }}<span class="text-sm">
             /{{ round(newRatersCount !== null ? newRatersCount : ratersCount) }}</span>
         </span>
     </div>
@@ -25,7 +25,7 @@ export default {
         destroyRoute: {
             type: String,
         },
-        average: {
+        averageRating: {
             type: Number,
             required: true
         },
@@ -76,7 +76,7 @@ export default {
             });
         },
         addAverage() {
-            const currentAverage = this.newAverage !== null ? this.newAverage : this.average
+            const currentAverage = this.newAverage !== null ? this.newAverage : this.averageRating
             const currentRatersCount = this.newRatersCount !== null ? this.newRatersCount : this.ratersCount
             this.newRatersCount = currentRatersCount + 1;
             this.newAverage = (currentAverage * currentRatersCount + this.rated) / this.newRatersCount;
@@ -87,7 +87,7 @@ export default {
                 this.newAverage = 0;
             } else {
                 this.newRatersCount = this.ratersCount - 1;
-                this.newAverage = (this.average * this.ratersCount - this.userRating) / this.newRatersCount;
+                this.newAverage = (this.averageRating * this.ratersCount - this.userRating) / this.newRatersCount;
             }
         },
         nullAverage() {

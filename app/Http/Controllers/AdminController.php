@@ -22,19 +22,4 @@ class AdminController extends Controller
         $title = __('admin.admin') . ' ' . __('admin.not_approved');
         return view('book.index', compact('books', 'title'));
     }
-
-    public function approveBook(Book $book): \Illuminate\Http\RedirectResponse
-    {
-        try {
-            $book->update(['approved_at' => now()]);
-        } catch (\Exception $e) {
-            return redirect()
-                ->route('admin.not_approved_books')
-                ->with('error', __('admin.approved_error'));
-        }
-
-        return redirect()
-            ->route('admin.not_approved_books')
-            ->with('success', __('admin.approved_success'));
-    }
 }

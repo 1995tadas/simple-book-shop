@@ -1,12 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +27,6 @@ Route::group(['middleware' => 'auth'], function () {
         // Admin panel routes
         Route::get('/panel', [AdminController::class, 'panel'])->name('panel');
         Route::get('/not-approved-books', [AdminController::class, 'notApprovedBooks'])->name('not_approved_books');
-        Route::put('/approve-book/{book}', [AdminController::class, 'approveBook'])->name('approve_book');
 
         // Genres
         Route::group(['prefix' => 'genre', 'as' => 'genre.'], function () {
@@ -55,23 +51,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('book', BookController::class)->only(['edit', 'update', 'destroy'])
             ->middleware('author.admin')->parameters(['book' => 'book:id']);
 
-        // Reviews
-        Route::post('review/{book}', [ReviewController::class, 'store'])->name('review.store');
-
-        // Ratings
-        Route::group(['as' => 'rating.', 'prefix' => 'rating'], function () {
-            Route::post('/{book}', [RatingController::class, 'store'])->name('store');
-            Route::delete('/{book}', [RatingController::class, 'destroy'])->name('destroy');
-        });
-
         // Reports
         Route::group(['as' => 'report.', 'prefix' => 'report'], function () {
             Route::get('/create/{book}', [ReportController::class, 'create'])->name('create');
             Route::post('/store/{book}', [ReportController::class, 'send'])->name('send');
         });
-
-        // Authors
-        Route::get('author/autocomplete', [AuthorController::class, 'autocomplete'])->name('author.autocomplete');
     });
 });
 

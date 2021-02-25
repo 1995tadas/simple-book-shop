@@ -1,25 +1,82 @@
 <template>
-    <div class="w-full">
-        <label for="review">{{ translation.write }}</label>
-        <span v-show="saved" class="block text-sm  mb-1 text-green-600">
-            {{ translation.created }}
-        </span>
-        <textarea class="w-full h-full" name="review" id="review"
-                  v-model="review">
-        </textarea>
-        <ul v-if="Object.keys(errors).length" class="text-sm mb-1 text-red-600">
-            <template v-for="error in errors">
-                <li v-for="single in error">{{ single }}</li>
+    <div id="reviews" class="my-2">
+        <div class="flex justify-between py-3 w-100">
+            <div class="w-60 hidden md:block md:invisible"><span class="inline">|</span></div>
+            <div class="flex-grow">
+                <h1 class="w-100 text-3xl border-b-4 border-black">{{ translation.reviews }}</h1>
+            </div>
+        </div>
+        <template v-if="reviews.data.length !== 0">
+            <template v-for="review in reviews.data">
+                <div class="flex justify-between flex-col md:flex-row py-3 w-100">
+                    <div class="w-100 md:w-60 flex-left md:text-right">
+                        <div class="text-xs m-0 md:m-1 mb-3">
+                            <span class="bg-blue-100 p-1 rounded">{{ review.created_at }}</span>
+                        </div>
+                        <span class="m-0 md:m-1 bg-blue-100 p-1 rounded"
+                              :class="{'text-red-400':review.users.id === user.id}"
+                        >{{ review.users.name }}</span>
+                    </div>
+                    <span class="flex-1 mt-1 md:mt-0 break-all">{{ review.content }}</span>
+                </div>
             </template>
-        </ul>
-        <button class="inline-flex items-center px-4 py-2 bg-gray-800 border
-                    border-transparent rounded-md font-semibold text-xs text-white uppercase
-                    tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none
-                    focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25
-                    transition ease-in-out duration-150"
-                @click.prevent="store">
-            {{ translation.send }}
-        </button>
+        </template>
+        <div v-else class="text-right text-xl mb-1">
+            {{ translation.nothing }}
+        </div>
+
+        <div v-if="reviews.prev_page_url !== null || reviews.next_page_url !== null" class="flex justify-start md:justify-end">
+          <a @click.prevent="reviews.current_page !== 1 ? pagination(reviews.current_page - 1) : ''"
+             class="p-4 m-1 bg-green-200 text-xl"
+             :class="[reviews.current_page === 1 ? 'opacity-20' : 'cursor-pointer hover:border-black border-2']"
+          ><</a>
+            <span class="p-4 m-1 bg-green-500 text-xl">
+                {{ reviews.current_page }}
+            </span>
+           <a @click.prevent="reviews.next_page_url !== null ? pagination(reviews.current_page + 1) : ''"
+           class="p-4 m-1 bg-green-200 text-xl"
+              :class="[reviews.next_page_url === null ? 'opacity-20' : 'cursor-pointer hover:border-black border-2']"
+           >></a>
+        </div>
+        <template v-if="Object.keys(user).length">
+            <label for="review">{{ translation.write }}</label>
+            <span v-show="saved" class="block text-sm  mb-1 text-green-600">
+                {{ translation.created }}
+            </span>
+            <ul v-if="Object.keys(errors).length" class="text-sm mb-1 text-red-600">
+                <template v-for="error in errors">
+                    <li v-for="single in error">{{ single }}</li>
+                </template>
+            </ul>
+            <textarea class="w-full h-full" name="review" id="review"
+                      v-model="review">
+            </textarea>
+            <button class="inline-flex items-center px-4 py-2 bg-gray-800 border
+                        border-transparent rounded-md font-semibold text-xs text-white uppercase
+                        tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none
+                        focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25
+                        transition ease-in-out duration-150"
+                    @click.prevent="store">
+                {{ translation.send }}
+            </button>
+        </template>
+        <template v-else>
+            <div class="text-right mt-1">
+                {{ translation.not_logged_first_part }}
+                <a class="text-indigo-500 hover:text-indigo-300
+                        background-transparent font-bold uppercase
+                        py-1 text-sm outline-none focus:outline-none"
+                   :href="loginRoute">
+                    {{ translation.not_logged_second_part }}
+                </a>
+                {{ translation.not_logged_third_part }}
+                <a class="text-indigo-500 hover:text-indigo-300
+                        background-transparent font-bold uppercase
+                        py-1 text-sm outline-none focus:outline-none" :href="registerRoute">
+                    {{ translation.not_logged_fourth_part }}
+                </a>
+            </div>
+        </template>
     </div>
 </template>
 
@@ -32,15 +89,19 @@ export default {
         },
         storeRoute: {
             type: String,
+        },
+        loginRoute:{
+            type: String,
+        },
+        registerRoute:{
+            type: String,
+        },
+        reviews:{
+            type: Object,
             required: true
         },
-        reviewsPerPage: {
-            type: Number,
-            required: true
-        },
-        page: {
-            type: Number,
-            required: true
+        user: {
+            type: Object,
         }
     },
     data() {
@@ -59,7 +120,7 @@ export default {
                 axios.post(this.storeRoute, {
                     content: this.review,
                 }).then((response) => {
-                    this.updateDom(response.data);
+                    this.updateDom();
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
                 });
@@ -89,49 +150,15 @@ export default {
 
             return true;
         },
-        updateDom(response) {
+        updateDom() {
             this.saved = true;
             this.oldReview = this.review;
+            this.$emit('newReview', this.reviews.current_page)
             this.review = ''
-            this.addReviewToDom(response.content, response.user, response.created_at);
         },
-        addReviewToDom(review, userName, createdAt) {
-            let reviewsEl = document.getElementById('reviews');
-            if (typeof (reviewsEl) !== 'undefined' && reviewsEl !== null && this.page === 1) {
-                if (reviewsEl.children.length >= this.reviewsPerPage + 3) {
-                    reviewsEl.removeChild(reviewsEl.children[this.reviewsPerPage]);
-                }
-
-                const contentText = document.createTextNode(review);
-                const userText = document.createTextNode(userName);
-                const createdAtText = document.createTextNode(createdAt);
-
-                let userContainerEl = document.createElement('div');
-                let contentEl = document.createElement('div')
-                let createdAtContainerEl = document.createElement('div');
-                let createdAtEl = document.createElement('span');
-                let userEl = document.createElement('span');
-                let newReviewEl = document.createElement('div')
-
-                userContainerEl.classList.add('w-100', 'md:w-60', 'flex-left', 'md:text-right');
-                contentEl.classList.add('flex-1', 'mt-1', 'md:mt-0', 'break-all');
-                createdAtContainerEl.classList.add('text-xs', 'm-0', 'md:m-1', 'mb-3');
-                createdAtEl.classList.add('bg-blue-100', 'p-1', 'rounded');
-                userEl.classList.add('m-0', 'md:m-1', 'bg-blue-100', 'p-1', 'rounded');
-                newReviewEl.classList.add('flex', 'justify-between', 'flex-col', 'md:flex-row', 'py-3', 'w-100');
-
-                createdAtEl.appendChild(createdAtText);
-                userEl.appendChild(userText);
-                contentEl.appendChild(contentText);
-                createdAtContainerEl.appendChild(createdAtEl);
-                userContainerEl.appendChild(createdAtContainerEl)
-                userContainerEl.appendChild(userEl)
-                newReviewEl.appendChild(userContainerEl);
-                newReviewEl.appendChild(contentEl);
-
-                reviewsEl.insertBefore(newReviewEl, reviewsEl.children[1]);
-            }
-        },
+        pagination(page){
+            this.$emit('newReview', page)
+        }
     }
 }
 </script>

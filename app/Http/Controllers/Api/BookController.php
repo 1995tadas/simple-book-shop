@@ -31,4 +31,30 @@ class BookController extends Controller
 
         return new BookResource($book);
     }
+
+    public function load(Book $book): \Illuminate\Http\JsonResponse
+    {
+        $book->load('ratings');
+        $ratings = $book->ratings;
+        $userRating = null;
+        if (auth()->check() && $ratings->isNotEmpty()) {
+            $userRating = optional(
+                $ratings->where('user_id', auth()->id())->first())
+                ->rate;
+        }
+
+        $reviews = $book->reviews()->with('users')->latest()->simplePaginate(10);
+        $averageRating = $ratings->IsEmpty() ? 0 : $ratings->avg('rate');
+        $data = [
+            'book' => $book,
+            'authors' => $book->authors,
+            'genres' => $book->genres,
+            'reviews' => $reviews,
+            'averageRating' => $averageRating,
+            'ratersCount' => $ratings->count(),
+            'userRating' => $userRating
+        ];
+
+        return response()->json($data);
+    }
 }

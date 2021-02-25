@@ -37,27 +37,7 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
-        $book->load('ratings');
-        $ratings = $book->ratings;
-        $userRating = null;
-        if (auth()->check() && $ratings->isNotEmpty()) {
-            $userRating = optional(
-                $ratings->where('user_id', auth()->id())->first())
-                ->rate;
-        }
-
-        $reviews = $book->reviews()->with('users')->latest()->simplePaginate(10);
-        $averageRatings = $ratings->IsEmpty() ? 0 : $ratings->avg('rate');
-        $data = [
-            'book' => $book,
-            'authors' => $book->authors,
-            'genres' => $book->genres,
-            'reviews' => $reviews,
-            'averageRatings' => $averageRatings,
-            'ratersCount' => $ratings->count(),
-            'userRating' => $userRating
-        ];
-        return view('book.show', $data);
+        return view('book.show', compact('book'));
     }
 
     public function create()

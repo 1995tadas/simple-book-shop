@@ -19,6 +19,7 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('book-show', require('./components/BookShow.vue').default);
 Vue.component('select-repeater', require('./components/SelectRepeater.vue').default);
 Vue.component('input-repeater', require('./components/InputRepeater.vue').default);
 Vue.component('book-rating', require('./components/BookRating.vue').default);

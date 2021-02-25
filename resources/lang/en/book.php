@@ -15,7 +15,6 @@ return [
     'empty' => 'There is no books',
     'free' => 'Free',
     'recent' => 'New',
-    'reviews' => 'Reviews',
     'show_passwords' => 'Show passwords',
     'approve' => 'approve and publish',
     'delete' => 'delete book',
@@ -28,4 +27,6 @@ return [
     'confirm' => 'Are you sure ?',
     'books' => 'books',
     'found' => 'Found',
+    'approve_success' => 'Approved successfully',
+    'approve_failed' => 'Approve failed',
 ];

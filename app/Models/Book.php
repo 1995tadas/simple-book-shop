@@ -43,9 +43,9 @@ class Book extends Model
         $cover = $this->attributes['cover'];
 
         if (!$cover) {
-            return 'images/book-placeholder.jpg';
+            return asset('images/book-placeholder.jpg');
         } else {
-            return 'storage/' . $cover;
+            return asset('storage/' . $cover);
         }
     }
 
