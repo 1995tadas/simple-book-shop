@@ -205,15 +205,16 @@ export default {
                 this.ratersCount = data.ratersCount;
                 this.userRating = data.userRating;
                 this.loading = false;
-            }).catch((error) => {
-            });
+            })
         },
         getUser() {
-            axios.get(this.userRoute, {}).then((response) => {
-                this.user = response.data;
-            }).catch((error) => {
-                this.authorized = false;
-            })
+            if(this.userRoute){
+                axios.get(this.userRoute, {}).then((response) => {
+                    this.user = response.data;
+                }).catch((error) => {
+                    this.authorized = false;
+                })
+            }
         },
         approveBook() {
             axios.post(this.bookApproveRoute, {

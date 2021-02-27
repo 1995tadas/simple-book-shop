@@ -15,9 +15,10 @@
                     :translation-review="{{ json_encode(trans('review')) }}"
 
                     book-load-route="{{ route('api.book.load', $book)}}"
-                    user-route="{{ route('api.user') }}"
 
                     @auth()
+                        user-route="{{ route('api.user') }}"
+
                         book-destroy-route="{{ route('user.book.destroy', $book) }}"
                         book-report-route="{{ route('user.report.create', $book) }}"
                         book-edit-route="{{ route('user.book.edit', $book) }}"
