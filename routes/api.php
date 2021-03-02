@@ -23,11 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 })->name('api.user');
 
-// Book endpoints
-Route::group(['prefix' => 'v1/books'], function () {
-    Route::get('/', [BookController::class, 'index']);
-    Route::get('/{book:id}', [BookController::class, 'show']);
-});
+// Book api
+Route::apiResource('v1/books', BookController::class)->only('index', 'show');
 
 Route::get('book/{book}', [BookController::class, 'load'])->name('api.book.load');
 

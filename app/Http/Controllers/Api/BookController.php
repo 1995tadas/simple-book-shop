@@ -20,7 +20,7 @@ class BookController extends Controller
             ->latest()
             ->paginate();
 
-        return BookResource::setMode('books')::collection($books);
+        return BookResource::collection($books);
     }
 
     public function show($id): BookResource
